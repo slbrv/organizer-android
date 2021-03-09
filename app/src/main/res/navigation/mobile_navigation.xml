@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_notes">
+
+    <fragment
+        android:id="@+id/navigation_notes"
+        android:name="com.slbrv.organizer.ui.home.HomeFragment"
+        android:label="@string/title_notes"
+        tools:layout="@layout/fragment_todo" />
+
+    <fragment
+        android:id="@+id/navigation_todo"
+        android:name="com.slbrv.organizer.ui.todo.ToDoFragment"
+        android:label="@string/title_todo"
+        tools:layout="@layout/fragment_notes" />
+
+    <fragment
+        android:id="@+id/navigation_counters"
+        android:name="com.slbrv.organizer.ui.counters.CountersFragment"
+        android:label="@string/title_counters"
+        tools:layout="@layout/fragment_counters" />
+</navigation>
