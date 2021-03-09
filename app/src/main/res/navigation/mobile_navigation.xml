@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/navigation_notes"
-        android:name="com.slbrv.organizer.ui.home.HomeFragment"
+        android:name="com.slbrv.organizer.ui.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_todo" />
+        tools:layout="@layout/fragment_tasks" />
 
     <fragment
-        android:id="@+id/navigation_todo"
-        android:name="com.slbrv.organizer.ui.todo.ToDoFragment"
-        android:label="@string/title_todo"
+        android:id="@+id/navigation_tasks"
+        android:name="com.slbrv.organizer.ui.tasks.TasksFragment"
+        android:label="@string/title_tasks"
         tools:layout="@layout/fragment_notes" />
 
     <fragment

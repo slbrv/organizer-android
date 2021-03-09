@@ -1,10 +1,10 @@
-package com.slbrv.organizer.ui.todo
+package com.slbrv.organizer.ui.tasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ToDoViewModel : ViewModel() {
+class TasksViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
