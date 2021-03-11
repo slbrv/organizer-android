@@ -3,4 +3,26 @@
     <string name="title_notes">Notes</string>
     <string name="title_tasks">Tasks</string>
     <string name="title_alarms">Alarms</string>
+    <string name="auth_error">Auth error, please try again</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="i_already_have_an_account"><u>I already have an account</u></string>
+    <string name="you_must_enter_a_username">You must enter a username!</string>
+    <string name="you_must_enter_a_email">You must enter a email!</string>
+    <string name="you_must_enter_a_password">You must enter a password!</string>
+    <string name="you_must_repeat_a_password">You must repeat a password!</string>
+    <string name="the_passwords_must_match">The passwords must match!</string>
+    <string name="username_must_be_at_least_5_characters_long">
+        Username must be at least 5 characters long!
+    </string>
+    <string name="username_can_only_contain_letters_numbers_and_underscore_signs">
+        Username can only contain letters, numbers and underscore signs!
+    </string>
+    <string name="password_must_be_at_least_6_characters_long">
+        Password must be at least 6 characters long!
+    </string>
+    <string name="invalid_email_entered">Invalid email entered!</string>
 </resources>

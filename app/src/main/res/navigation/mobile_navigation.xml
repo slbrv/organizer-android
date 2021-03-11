@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_notes" />
 
     <fragment
-        android:id="@+id/navigation_counters"
+        android:id="@+id/navigation_alarms"
         android:name="com.slbrv.organizer.ui.alarms.AlarmsFragment"
         android:label="@string/title_alarms"
         tools:layout="@layout/fragment_alarms" />
