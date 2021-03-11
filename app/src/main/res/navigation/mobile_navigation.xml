@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_counters"
-        android:name="com.slbrv.organizer.ui.counters.CountersFragment"
-        android:label="@string/title_counters"
-        tools:layout="@layout/fragment_counters" />
+        android:name="com.slbrv.organizer.ui.alarms.AlarmsFragment"
+        android:label="@string/title_alarms"
+        tools:layout="@layout/fragment_alarms" />
 </navigation>

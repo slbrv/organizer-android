@@ -1,10 +1,10 @@
-package com.slbrv.organizer.ui.counters
+package com.slbrv.organizer.ui.alarms
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CountersViewModel : ViewModel() {
+class AlarmsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"

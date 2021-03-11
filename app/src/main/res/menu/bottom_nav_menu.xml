@@ -14,6 +14,6 @@
     <item
         android:id="@+id/navigation_counters"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_counters" />
+        android:title="@string/title_alarms" />
 
 </menu>

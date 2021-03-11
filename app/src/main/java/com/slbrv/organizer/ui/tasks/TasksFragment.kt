@@ -18,11 +18,10 @@ class TasksFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        tasksViewModel =
-                ViewModelProvider(this).get(TasksViewModel::class.java)
+        tasksViewModel = ViewModelProvider(this).get(TasksViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_notes, container, false)
         tasksViewModel.text.observe(viewLifecycleOwner, Observer {
-
+            
         })
         return root
     }
