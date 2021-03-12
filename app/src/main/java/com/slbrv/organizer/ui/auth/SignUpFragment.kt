@@ -1,24 +1,25 @@
 package com.slbrv.organizer.ui.auth
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.slbrv.organizer.R
+import com.slbrv.organizer.data.entity.AuthBody
 
-class SignUpFragment : Fragment() {
-    
+class SignUpFragment() : Fragment() {
+
     companion object {
         fun newInstance() = SignUpFragment()
     }
 
-    private lateinit var _viewModel: SignUpViewModel
+    private val _viewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +40,7 @@ class SignUpFragment : Fragment() {
             val repPwd = repeatPasswordEditView.text.toString()
 
             if (isValid(username, email, pwd, repPwd)) {
-                Log.i("APP", "Valid")
+                _viewModel.signUp(AuthBody(username, email, pwd))
             } else {
                 Log.i("APP", "Not valid")
             }
@@ -50,7 +51,6 @@ class SignUpFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        _viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
     }
 
     private fun isValid(username: String, email: String, pwd: String, repPwd: String) : Boolean{
