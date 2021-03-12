@@ -48,15 +48,14 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-    private fun setSignInFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, SignInFragment.newInstance())
-            .commitNow()
-    }
-
     private fun setSignUpFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, SignUpFragment.newInstance())
+        supportFragmentManager
+            .beginTransaction()
+            .add(
+                R.id.auth_fragment_container,
+                SignUpFragment.newInstance(),
+                "sign_up_fragment"
+            )
             .commitNow()
     }
 }

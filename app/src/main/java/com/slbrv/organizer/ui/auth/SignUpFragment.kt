@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -33,6 +34,8 @@ class SignUpFragment() : Fragment() {
         val passwordEditView = view.findViewById<EditText>(R.id.sign_up_pwd_edit_view)
         val repeatPasswordEditView = view.findViewById<EditText>(R.id.sign_up_rep_pwd_edit_view)
         val signUpButton = view.findViewById<Button>(R.id.sign_up_button)
+        val haveAccountTextView = view.findViewById<TextView>(R.id.sign_up_have_account_text_view)
+
         signUpButton.setOnClickListener {
             val username = usernameEditView.text.toString()
             val email = emailEditView.text.toString()
@@ -46,6 +49,12 @@ class SignUpFragment() : Fragment() {
             }
         }
 
+        haveAccountTextView.setOnClickListener { v ->
+            run {
+                toSignInFragment()
+            }
+        }
+
         return view
     }
 
@@ -53,7 +62,7 @@ class SignUpFragment() : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun isValid(username: String, email: String, pwd: String, repPwd: String) : Boolean{
+    private fun isValid(username: String, email: String, pwd: String, repPwd: String): Boolean {
         var valid = false;
         val userNameRegex = Regex("[a-zA-Z0-9_]*")
         val emailRegex = Regex("[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-z]+")
@@ -88,9 +97,9 @@ class SignUpFragment() : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
 
-            pwd.isEmpty() -> Toast.makeText(
+            pwd.length < 6 -> Toast.makeText(
                 context,
-                R.string.you_must_enter_a_password,
+                R.string.password_must_be_at_least_6_characters_long,
                 Toast.LENGTH_LONG
             ).show()
 
@@ -109,5 +118,28 @@ class SignUpFragment() : Fragment() {
             else -> valid = true
         }
         return valid
+    }
+
+    private fun toSignInFragment() {
+        val manager = activity?.supportFragmentManager
+
+        val fragment = manager?.findFragmentByTag("sign_in_fragment")
+        if (fragment != null) {
+            manager
+                .beginTransaction()
+                .show(fragment)
+                .hide(this)
+                .commit()
+        } else {
+            manager
+                ?.beginTransaction()
+                ?.add(
+                    R.id.auth_fragment_container,
+                    SignInFragment.newInstance(),
+                    "sign_in_fragment"
+                )
+                ?.hide(this)
+                ?.commit()
+        }
     }
 }

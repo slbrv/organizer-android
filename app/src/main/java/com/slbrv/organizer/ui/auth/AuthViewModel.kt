@@ -16,4 +16,8 @@ class AuthViewModel : ViewModel() {
     fun signUp(data: AuthBody) {
         repo.signUp(mutableToken, data)
     }
+
+    fun signIn(data: AuthBody) {
+        repo.signIn(mutableToken, data)
+    }
 }

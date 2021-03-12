@@ -65,11 +65,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/sign_up"
-            app:layout_constraintBottom_toTopOf="@+id/already_have_an_account_text_view"
+            app:layout_constraintBottom_toTopOf="@+id/sign_up_have_account_text_view"
             tools:layout_editor_absoluteX="0dp" />
 
         <TextView
-            android:id="@+id/already_have_an_account_text_view"
+            android:id="@+id/sign_up_have_account_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
