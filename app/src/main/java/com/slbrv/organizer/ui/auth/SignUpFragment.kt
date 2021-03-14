@@ -1,6 +1,8 @@
 package com.slbrv.organizer.ui.auth
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -41,12 +43,17 @@ class SignUpFragment() : Fragment() {
             val email = emailEditView.text.toString()
             val pwd = passwordEditView.text.toString()
             val repPwd = repeatPasswordEditView.text.toString()
+            signUpButton.isEnabled = false
 
-            if (isValid(username, email, pwd, repPwd)) {
+            if (validate(username, email, pwd, repPwd)) {
                 _viewModel.signUp(AuthBody(username, email, pwd))
             } else {
                 Log.i("APP", "Not valid")
             }
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                signUpButton.isEnabled = true
+            }, 3000)
         }
 
         haveAccountTextView.setOnClickListener { v ->
@@ -62,62 +69,26 @@ class SignUpFragment() : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun isValid(username: String, email: String, pwd: String, repPwd: String): Boolean {
-        var valid = false;
+    private fun validate(username: String, email: String, pwd: String, repPwd: String): Boolean {
+        fun invalid(msg: Int) : Boolean{
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         val userNameRegex = Regex("[a-zA-Z0-9_]*")
         val emailRegex = Regex("[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-z]+")
-        when {
-            username.isEmpty() -> Toast.makeText(
-                context,
-                R.string.you_must_enter_a_username,
-                Toast.LENGTH_LONG
-            ).show()
 
-            username.length < 5 -> Toast.makeText(
-                context,
-                R.string.username_must_be_at_least_5_characters_long,
-                Toast.LENGTH_LONG
-            ).show()
-
-            !userNameRegex.matches(username) -> Toast.makeText(
-                context,
-                R.string.username_can_only_contain_letters_numbers_and_underscore_signs,
-                Toast.LENGTH_LONG
-            ).show()
-
-            email.isEmpty() -> Toast.makeText(
-                context,
-                R.string.you_must_enter_a_email,
-                Toast.LENGTH_LONG
-            ).show()
-
-            !emailRegex.matches(email) -> Toast.makeText(
-                context,
-                R.string.invalid_email_entered,
-                Toast.LENGTH_LONG
-            ).show()
-
-            pwd.length < 6 -> Toast.makeText(
-                context,
-                R.string.password_must_be_at_least_6_characters_long,
-                Toast.LENGTH_LONG
-            ).show()
-
-            repPwd.isEmpty() -> Toast.makeText(
-                context,
-                R.string.you_must_repeat_a_password,
-                Toast.LENGTH_LONG
-            ).show()
-
-            pwd != repPwd -> Toast.makeText(
-                context,
-                R.string.the_passwords_must_match,
-                Toast.LENGTH_LONG
-            ).show()
-
-            else -> valid = true
+        return when {
+            username.isEmpty() -> invalid(R.string.you_must_enter_a_username)
+            username.length < 3 -> invalid(R.string.username_must_be_at_least_3_characters_long)
+            !userNameRegex.matches(username) -> invalid(R.string.username_can_only_contain)
+            email.isEmpty() -> invalid(R.string.you_must_enter_a_email)
+            !emailRegex.matches(email) -> invalid(R.string.invalid_email_entered)
+            pwd.length < 6 -> invalid(R.string.password_must_be_at_least_6_characters_long)
+            repPwd.isEmpty() -> invalid(R.string.you_must_repeat_a_password)
+            pwd != repPwd -> invalid(R.string.the_passwords_must_match)
+            else -> true
         }
-        return valid
     }
 
     private fun toSignInFragment() {

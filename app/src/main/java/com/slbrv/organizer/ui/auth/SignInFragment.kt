@@ -1,6 +1,8 @@
 package com.slbrv.organizer.ui.auth
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -38,14 +40,24 @@ class SignInFragment : Fragment() {
             run {
                 val field = nameEditView.text.toString()
                 val pwd = passwordEditView.text.toString()
+                signInButton.isEnabled = false
 
                 val body = validate(field, pwd)
                 if (body != null) {
                     _viewModel.signIn(body)
                 } else {
-                    Toast.makeText(context, R.string.auth_error, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        R.string.auth_error,
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
                     Log.i("APP", "Body: $body")
                 }
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    signInButton.isEnabled = true
+                }, 3000)
             }
         }
 
@@ -55,7 +67,6 @@ class SignInFragment : Fragment() {
             }
         }
 
-
         return view
     }
 
@@ -64,32 +75,24 @@ class SignInFragment : Fragment() {
     }
 
     private fun validate(field: String, pwd: String): AuthBody? {
-        val nameRegex = Regex("[a-zA-Z0-9_]*")
+        fun invalid(): AuthBody? {
+            Toast.makeText(
+                context,
+                R.string.invalid_username_or_email_entered,
+                Toast.LENGTH_SHORT
+            ).show()
+            return null
+        }
+
+        val nameRegex = Regex("[a-zA-Z0-9_]{3,}")
         val emailRegex = Regex("[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-z]+")
 
-        when {
-            pwd.length < 6 -> {
-                Toast.makeText(
-                    context,
-                    R.string.password_must_be_at_least_6_characters_long,
-                    Toast.LENGTH_LONG
-                ).show()
-                return null
-            }
-
+        return when {
+            pwd.length < 6 -> invalid()
             nameRegex.matches(field) -> AuthBody(field, "", pwd)
             emailRegex.matches(field) -> AuthBody("", field, pwd)
-
-            else -> {
-                Toast.makeText(
-                    context,
-                    R.string.invalid_username_or_email_entered,
-                    Toast.LENGTH_LONG
-                ).show()
-                return null
-            }
+            else -> invalid()
         }
-        return null
     }
 
     private fun toSignUpFragment() {
