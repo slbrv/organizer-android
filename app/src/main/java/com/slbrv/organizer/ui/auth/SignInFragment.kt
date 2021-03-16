@@ -22,7 +22,7 @@ class SignInFragment : Fragment() {
         fun newInstance() = SignInFragment()
     }
 
-    private val _viewModel: AuthViewModel by activityViewModels()
+    private val viewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +44,7 @@ class SignInFragment : Fragment() {
 
                 val body = validate(field, pwd)
                 if (body != null) {
-                    _viewModel.signIn(body)
+                    viewModel.signIn(body)
                 } else {
                     Toast.makeText(
                         context,

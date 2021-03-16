@@ -53,6 +53,11 @@ class MainActivity : AppCompatActivity() {
                 startActivityForResult(intent, AUTH_REQUEST_CODE)
             } else {
                 setTasksFragment()
+                if (token == "fail") Toast.makeText(
+                    this,
+                    R.string.connection_error,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 

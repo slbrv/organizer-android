@@ -22,7 +22,7 @@ class SignUpFragment() : Fragment() {
         fun newInstance() = SignUpFragment()
     }
 
-    private val _viewModel: AuthViewModel by activityViewModels()
+    private val viewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +46,7 @@ class SignUpFragment() : Fragment() {
             signUpButton.isEnabled = false
 
             if (validate(username, email, pwd, repPwd)) {
-                _viewModel.signUp(AuthBody(username, email, pwd))
+                viewModel.signUp(AuthBody(username, email, pwd))
             } else {
                 Log.i("APP", "Not valid")
             }

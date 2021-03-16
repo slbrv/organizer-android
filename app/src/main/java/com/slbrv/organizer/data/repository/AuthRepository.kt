@@ -81,7 +81,7 @@ class AuthRepository {
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("APP", "onFailure() ${t.message}")
-                tokenLiveData.postValue("")
+                tokenLiveData.postValue("fail")
             }
         })
     }
