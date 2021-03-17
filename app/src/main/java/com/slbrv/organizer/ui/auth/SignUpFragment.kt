@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.entity.AuthBody
+import com.slbrv.organizer.data.entity.auth.AuthBody
 
 class SignUpFragment() : Fragment() {
 

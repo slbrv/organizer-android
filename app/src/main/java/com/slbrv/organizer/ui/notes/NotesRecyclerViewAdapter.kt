@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.entity.Note
+import com.slbrv.organizer.data.entity.notes.NoteRoom
 
-class NotesRecyclerViewAdapter(private val notes: List<Note>) :
+class NotesRecyclerViewAdapter(private val notes: List<NoteRoom>) :
 
     RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
 
@@ -22,7 +22,11 @@ class NotesRecyclerViewAdapter(private val notes: List<Note>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.noteTitleTextView = notes.get(position).
+        holder.noteTitleTextView?.text = notes[position].title
+        holder.noteContentTextView?.text = notes[position].content
+        holder.noteCreationDateTextView?.text = notes[position].creationDate.toString()
+        holder.noteProjectTextView?.text = notes[position].project
+        // holder.noteTitleTextView?.text = notes[position].synced
     }
 
     override fun getItemCount() = notes.size
