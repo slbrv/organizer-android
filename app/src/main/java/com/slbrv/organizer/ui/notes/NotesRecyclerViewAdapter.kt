@@ -3,10 +3,13 @@ package com.slbrv.organizer.ui.notes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.entity.notes.NoteRoom
+import java.text.DateFormat
 
 class NotesRecyclerViewAdapter(private val notes: List<NoteRoom>) :
 
@@ -14,7 +17,7 @@ class NotesRecyclerViewAdapter(private val notes: List<NoteRoom>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(
-            R.layout.notes_recycler_view_item,
+            R.layout.note_recycler_view_item,
             parent,
             false
         )
@@ -24,9 +27,9 @@ class NotesRecyclerViewAdapter(private val notes: List<NoteRoom>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.noteTitleTextView?.text = notes[position].title
         holder.noteContentTextView?.text = notes[position].content
-        holder.noteCreationDateTextView?.text = notes[position].creationDate.toString()
         holder.noteProjectTextView?.text = notes[position].project
-        // holder.noteTitleTextView?.text = notes[position].synced
+        holder.noteCreationDateTextView?.text =
+            DateFormat.getDateInstance().format(notes[position].creationDate)
     }
 
     override fun getItemCount() = notes.size
