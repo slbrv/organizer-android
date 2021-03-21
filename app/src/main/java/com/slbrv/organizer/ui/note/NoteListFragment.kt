@@ -1,33 +1,30 @@
-package com.slbrv.organizer.ui.notes
+package com.slbrv.organizer.ui.note
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.dao.NoteDao
 import com.slbrv.organizer.data.entity.notes.NoteRoom
-import java.text.DateFormat
 import java.util.*
 
-class NotesFragment : Fragment() {
+class NoteListFragment : Fragment() {
 
-    private lateinit var mNotesViewModel: NotesViewModel
-    private lateinit var mNotesRecyclerView: RecyclerView
+    private lateinit var noteViewModel: NoteViewModel
+    private lateinit var noteRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mNotesViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notes, container, false)
+        val root = inflater.inflate(R.layout.fragment_note_list, container, false)
+        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
         val content1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo" +
                 "d tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam" +
@@ -45,9 +42,18 @@ class NotesFragment : Fragment() {
             NoteRoom(2, "Note #3", content1, Date(), Date(), "Super uni", false)
         )
 
-        mNotesRecyclerView = root.findViewById(R.id.notes_recycler_view)
-        mNotesRecyclerView.layoutManager = LinearLayoutManager(context)
-        mNotesRecyclerView.adapter = NotesRecyclerViewAdapter(notes)
+        noteRecyclerView = root.findViewById(R.id.note_recycler_view)
+        noteRecyclerView.layoutManager = LinearLayoutManager(context)
+        noteRecyclerView.adapter = NoteRecyclerViewAdapter(notes)
+
+        val addActionButton: FloatingActionButton = root.findViewById(R.id.note_add_action_button)
+        addActionButton.setOnClickListener{ v ->
+            val fragment = NoteEditFragment()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.nav_host_fragment, fragment)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
 
         return root
     }

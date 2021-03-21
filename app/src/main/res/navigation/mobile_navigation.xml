@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_notes">
+    app:startDestination="@+id/nav_notes">
 
     <fragment
-        android:id="@+id/navigation_notes"
-        android:name="com.slbrv.organizer.ui.notes.NotesFragment"
+        android:id="@+id/nav_notes"
+        android:name="com.slbrv.organizer.ui.note.NoteListFragment"
         android:label="@string/title_notes"
         tools:layout="@layout/fragment_tasks" />
 
     <fragment
-        android:id="@+id/navigation_tasks"
-        android:name="com.slbrv.organizer.ui.tasks.TasksFragment"
+        android:id="@+id/nav_tasks"
+        android:name="com.slbrv.organizer.ui.task.TaskListFragment"
         android:label="@string/title_tasks"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_note_list" />
 
     <fragment
-        android:id="@+id/navigation_alarms"
-        android:name="com.slbrv.organizer.ui.alarms.AlarmsFragment"
+        android:id="@+id/nav_alarms"
+        android:name="com.slbrv.organizer.ui.alarm.AlarmListFragment"
         android:label="@string/title_alarms"
         tools:layout="@layout/fragment_alarms" />
 </navigation>

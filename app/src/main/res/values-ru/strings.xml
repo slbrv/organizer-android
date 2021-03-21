@@ -38,4 +38,6 @@
     <string name="incorrect_username_or_password">Неверное имя пользователя, почта или пароль</string>
     <string name="note_title">Название заметки</string>
     <string name="note_content">Содержание заметки</string>
+    <string name="title">Название</string>
+    <string name="content">Содержание...</string>
 </resources>

@@ -1,19 +1,17 @@
-package com.slbrv.organizer.ui.notes
+package com.slbrv.organizer.ui.note
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.entity.notes.NoteRoom
 import java.text.DateFormat
 
-class NotesRecyclerViewAdapter(private val notes: List<NoteRoom>) :
+class NoteRecyclerViewAdapter(private val notes: List<NoteRoom>) :
 
-    RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
+    RecyclerView.Adapter<NoteRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(

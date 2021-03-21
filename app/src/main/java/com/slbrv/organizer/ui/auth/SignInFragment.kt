@@ -105,7 +105,7 @@ class SignInFragment : Fragment() {
             manager
                 ?.beginTransaction()
                 ?.add(
-                    R.id.auth_fragment_container,
+                    R.id.activity_main_container,
                     SignUpFragment.newInstance(),
                     "sign_up_fragment"
                 )
