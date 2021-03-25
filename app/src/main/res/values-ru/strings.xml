@@ -3,6 +3,7 @@
     <string name="title_notes">Заметки</string>
     <string name="title_tasks">Задачи</string>
     <string name="title_alarms">Будильники</string>
+    <string name="title_note">Заметка</string>
     <string name="auth_error">Ошибка авторизации, попробуйте еще раз</string>
     <string name="connection_error">Ошибка соединения. Приложение работает в автономном режиме</string>
     <string name="username">Имя пользователя</string>
@@ -40,4 +41,5 @@
     <string name="note_content">Содержание заметки</string>
     <string name="title">Название</string>
     <string name="content">Содержание...</string>
+    <string name="note_editing">Редактирование заметки</string>
 </resources>

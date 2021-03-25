@@ -3,6 +3,7 @@
     <string name="title_notes">Notes</string>
     <string name="title_tasks">Tasks</string>
     <string name="title_alarms">Alarms</string>
+    <string name="title_note">Note</string>
     <string name="auth_error">Auth error, please try again</string>
     <string name="connection_error">Connection error. The app works offline</string>
     <string name="username">Username</string>
@@ -41,4 +42,5 @@
     <string name="add_button" translatable="false">Add button</string>
     <string name="title">Title</string>
     <string name="content">Content...</string>
+    <string name="note_editing">Note editing</string>
 </resources>

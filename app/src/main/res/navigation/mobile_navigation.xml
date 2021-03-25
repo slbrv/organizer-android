@@ -9,17 +9,29 @@
         android:id="@+id/nav_notes"
         android:name="com.slbrv.organizer.ui.note.NoteListFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_tasks" />
+        tools:layout="@layout/fragment_tasks" >
+        <action
+            android:id="@+id/action_nav_notes_to_noteEditFragment2"
+            app:destination="@id/nav_note" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_tasks"
         android:name="com.slbrv.organizer.ui.task.TaskListFragment"
         android:label="@string/title_tasks"
-        tools:layout="@layout/fragment_note_list" />
+        tools:layout="@layout/fragment_notes" />
 
     <fragment
         android:id="@+id/nav_alarms"
         android:name="com.slbrv.organizer.ui.alarm.AlarmListFragment"
         android:label="@string/title_alarms"
         tools:layout="@layout/fragment_alarms" />
+    <fragment
+        android:id="@+id/nav_note"
+        android:name="com.slbrv.organizer.ui.note.NoteEditFragment"
+        android:label="@string/title_note" >
+        <action
+            android:id="@+id/action_nav_note_to_nav_notes"
+            app:destination="@id/nav_notes" />
+    </fragment>
 </navigation>

@@ -24,6 +24,11 @@ class SignInFragment : Fragment() {
 
     private val viewModel: AuthViewModel by activityViewModels()
 
+    private lateinit var nameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var signInButton: Button
+    private lateinit var haveAccountTextView: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,41 +36,13 @@ class SignInFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
-        val nameEditView = view.findViewById<EditText>(R.id.sign_in_username_or_email_edit_view)
-        val passwordEditView = view.findViewById<EditText>(R.id.sign_in_pwd_edit_view)
-        val signInButton = view.findViewById<Button>(R.id.sign_in_button)
-        val haveAccountTextView = view.findViewById<TextView>(R.id.sign_in_have_acc_text_view)
+        nameEditText = view.findViewById(R.id.sign_in_username_or_email_edit_view)
+        passwordEditText = view.findViewById(R.id.sign_in_pwd_edit_view)
+        signInButton = view.findViewById(R.id.sign_in_button)
+        haveAccountTextView = view.findViewById(R.id.sign_in_have_acc_text_view)
 
-        signInButton.setOnClickListener { v ->
-            run {
-                val field = nameEditView.text.toString()
-                val pwd = passwordEditView.text.toString()
-                signInButton.isEnabled = false
-
-                val body = validate(field, pwd)
-                if (body != null) {
-                    viewModel.signIn(body)
-                } else {
-                    Toast.makeText(
-                        context,
-                        R.string.auth_error,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    Log.i("APP", "Body: $body")
-                }
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    signInButton.isEnabled = true
-                }, 3000)
-            }
-        }
-
-        haveAccountTextView.setOnClickListener { v ->
-            run {
-                toSignUpFragment()
-            }
-        }
+        signInButton.setOnClickListener { onSignIn() }
+        haveAccountTextView.setOnClickListener { toSignUpFragment() }
 
         return view
     }
@@ -112,6 +89,30 @@ class SignInFragment : Fragment() {
                 ?.hide(this)
                 ?.commit()
         }
+    }
 
+    private fun onSignIn() {
+        run {
+            val field = nameEditText.text.toString()
+            val pwd = passwordEditText.text.toString()
+            signInButton.isEnabled = false
+
+            val body = validate(field, pwd)
+            if (body != null) {
+                viewModel.signIn(body)
+            } else {
+                Toast.makeText(
+                    context,
+                    R.string.auth_error,
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.i("APP", "Body: $body")
+            }
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                signInButton.isEnabled = true
+            }, 3000)
+        }
     }
 }

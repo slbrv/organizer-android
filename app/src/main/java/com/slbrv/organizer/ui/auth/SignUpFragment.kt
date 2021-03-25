@@ -24,6 +24,13 @@ class SignUpFragment() : Fragment() {
 
     private val viewModel: AuthViewModel by activityViewModels()
 
+    private lateinit var usernameEditText: EditText
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var repeatPasswordEditText: EditText
+    private lateinit var signUpButton: Button
+    private lateinit var haveAccountTextView: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,42 +38,17 @@ class SignUpFragment() : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
 
-        val usernameEditView = view.findViewById<EditText>(R.id.sign_up_username_edit_view)
-        val emailEditView = view.findViewById<EditText>(R.id.sign_up_email_edit_view)
-        val passwordEditView = view.findViewById<EditText>(R.id.sign_up_pwd_edit_view)
-        val repeatPasswordEditView = view.findViewById<EditText>(R.id.sign_up_rep_pwd_edit_view)
-        val signUpButton = view.findViewById<Button>(R.id.sign_up_button)
-        val haveAccountTextView = view.findViewById<TextView>(R.id.sign_up_have_account_text_view)
+        usernameEditText = view.findViewById(R.id.sign_up_username_edit_view)
+        emailEditText = view.findViewById(R.id.sign_up_email_edit_view)
+        passwordEditText = view.findViewById(R.id.sign_up_pwd_edit_view)
+        repeatPasswordEditText = view.findViewById(R.id.sign_up_rep_pwd_edit_view)
+        signUpButton = view.findViewById(R.id.sign_up_button)
+        haveAccountTextView = view.findViewById(R.id.sign_up_have_account_text_view)
 
-        signUpButton.setOnClickListener {
-            val username = usernameEditView.text.toString()
-            val email = emailEditView.text.toString()
-            val pwd = passwordEditView.text.toString()
-            val repPwd = repeatPasswordEditView.text.toString()
-            signUpButton.isEnabled = false
-
-            if (validate(username, email, pwd, repPwd)) {
-                viewModel.signUp(AuthBody(username, email, pwd))
-            } else {
-                Log.i("APP", "Not valid")
-            }
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                signUpButton.isEnabled = true
-            }, 3000)
-        }
-
-        haveAccountTextView.setOnClickListener { v ->
-            run {
-                toSignInFragment()
-            }
-        }
+        signUpButton.setOnClickListener { onSignUp() }
+        haveAccountTextView.setOnClickListener { toSignInFragment() }
 
         return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     private fun validate(username: String, email: String, pwd: String, repPwd: String): Boolean {
@@ -112,5 +94,23 @@ class SignUpFragment() : Fragment() {
                 ?.hide(this)
                 ?.commit()
         }
+    }
+
+    private fun onSignUp() {
+        val username = usernameEditText.text.toString()
+        val email = emailEditText.text.toString()
+        val pwd = passwordEditText.text.toString()
+        val repPwd = repeatPasswordEditText.text.toString()
+        signUpButton.isEnabled = false
+
+        if (validate(username, email, pwd, repPwd)) {
+            viewModel.signUp(AuthBody(username, email, pwd))
+        } else {
+            Log.i("APP", "Not valid")
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            signUpButton.isEnabled = true
+        }, 3000)
     }
 }

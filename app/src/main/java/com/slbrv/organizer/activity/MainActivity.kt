@@ -11,13 +11,13 @@ import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.slbrv.organizer.R
-import com.slbrv.organizer.ui.alarm.AlarmListFragment
-import com.slbrv.organizer.ui.note.NoteListFragment
-import com.slbrv.organizer.ui.task.TaskListFragment
 
-class MainActivity : AppCompatActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     private val AUTH_PREFERENCES: String = "auth_data"
     private val AUTH_TOKEN: String = "token"
@@ -30,7 +30,10 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        navView.setOnNavigationItemSelectedListener(this)
+
+        val navController = findNavController(R.id.nav_host_fragment)
+
+        navView.setupWithNavController(navController)
 
         val preferences: SharedPreferences = getSharedPreferences(
             AUTH_PREFERENCES,
@@ -53,10 +56,6 @@ class MainActivity : AppCompatActivity(),
             }
         })
 
-        activeFragment = NoteListFragment()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, activeFragment, activeFragment::class.simpleName)
-            .commit()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,68 +88,5 @@ class MainActivity : AppCompatActivity(),
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-
-            R.id.nav_notes -> {
-                val name = NoteListFragment::class.simpleName
-                var fragment = supportFragmentManager.findFragmentByTag(name)
-                if (fragment == null) {
-                    fragment = NoteListFragment()
-                    supportFragmentManager.beginTransaction()
-                        .hide(activeFragment)
-                        .add(R.id.nav_host_fragment, fragment, name)
-                        .commit()
-                    activeFragment = fragment
-                } else {
-                    supportFragmentManager.beginTransaction()
-                        .hide(activeFragment)
-                        .show(fragment)
-                        .commit()
-                    activeFragment = fragment
-                }
-            }
-
-            R.id.nav_tasks -> {
-                val name = TaskListFragment::class.simpleName
-                var fragment = supportFragmentManager.findFragmentByTag(name)
-                if (fragment == null) {
-                    fragment = TaskListFragment()
-                    supportFragmentManager.beginTransaction()
-                        .hide(activeFragment)
-                        .add(R.id.nav_host_fragment, fragment, name)
-                        .commit()
-                    activeFragment = fragment
-                } else {
-                    supportFragmentManager.beginTransaction()
-                        .hide(activeFragment)
-                        .show(fragment)
-                        .commit()
-                    activeFragment = fragment
-                }
-            }
-
-            R.id.nav_alarms -> {
-                val name = AlarmListFragment::class.simpleName
-                var fragment = supportFragmentManager.findFragmentByTag(name)
-                if (fragment == null) {
-                    fragment = AlarmListFragment()
-                    supportFragmentManager.beginTransaction()
-                        .hide(activeFragment)
-                        .add(R.id.nav_host_fragment, fragment, name)
-                        .commit()
-                    activeFragment = fragment
-                } else {
-                    supportFragmentManager.beginTransaction()
-                        .hide(activeFragment)
-                        .show(fragment)
-                        .commit()
-                    activeFragment = fragment
-                }
-            }
-        }
-        return true
     }
 }

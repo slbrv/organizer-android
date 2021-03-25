@@ -3,34 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_note_edit_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/title"
-        android:inputType="textPersonName"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@color/white"
+        app:title="@string/note_editing"
+        app:titleTextColor="@color/white"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@null"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/content"
-        android:inputType="textMultiLine"
-        android:padding="4dp"
-        android:selectAllOnFocus="false"
-        android:textSize="18sp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_note_edit_fragment">
+
+        <EditText
+            android:id="@+id/note_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/title"
+            android:inputType="textPersonName"
+            android:textSize="24sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/note_content_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/content"
+            android:inputType="textMultiLine"
+            android:padding="4dp"
+            android:selectAllOnFocus="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/note_title_edit_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

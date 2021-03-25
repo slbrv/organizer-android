@@ -19,7 +19,7 @@ class TaskListFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_note_list, container, false)
+        val root = inflater.inflate(R.layout.fragment_notes, container, false)
         taskViewModel.text.observe(viewLifecycleOwner, Observer {
             
         })
