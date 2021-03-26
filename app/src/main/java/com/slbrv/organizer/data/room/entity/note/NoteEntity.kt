@@ -1,4 +1,4 @@
-package com.slbrv.organizer.data.entity.notes
+package com.slbrv.organizer.data.room.entity.note
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
-data class NoteRoom(
+data class NoteEntity(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "content") val content: String?,

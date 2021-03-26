@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.slbrv.organizer.data.Config
-import com.slbrv.organizer.data.entity.auth.AuthBody
-import com.slbrv.organizer.data.entity.auth.AuthResponse
+import com.slbrv.organizer.data.room.entity.auth.AuthBody
+import com.slbrv.organizer.data.room.entity.auth.AuthResponse
 import com.slbrv.organizer.data.repository.api.AuthApi
 import retrofit2.Call
 import retrofit2.Callback

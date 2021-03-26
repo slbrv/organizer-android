@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.entity.notes.NoteRoom
+import com.slbrv.organizer.data.room.entity.note.NoteEntity
 import java.text.DateFormat
 
-class NoteRecyclerViewAdapter(private val notes: List<NoteRoom>) :
+class NoteRecyclerViewAdapter(private val notes: List<NoteEntity>) :
 
     RecyclerView.Adapter<NoteRecyclerViewAdapter.ViewHolder>() {
 

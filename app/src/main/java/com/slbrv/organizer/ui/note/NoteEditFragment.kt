@@ -1,8 +1,7 @@
 package com.slbrv.organizer.ui.note
 
-import android.graphics.*
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
@@ -38,7 +37,6 @@ class NoteEditFragment : Fragment() {
         val color = ContextCompat.getColor(requireContext(), R.color.white)
         toolbar.navigationIcon?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
         toolbar.setNavigationOnClickListener{ activity?.onBackPressed() }
-
 
         return root
     }
