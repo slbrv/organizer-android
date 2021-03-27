@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.room.entity.note.NoteEntity
+import com.slbrv.organizer.data.room.entity.note.Note
 import java.text.DateFormat
 
-class NoteRecyclerViewAdapter(private val notes: List<NoteEntity>) :
+class NoteRecyclerViewAdapter(private var notes: List<Note>) :
 
     RecyclerView.Adapter<NoteRecyclerViewAdapter.ViewHolder>() {
 
@@ -31,6 +31,11 @@ class NoteRecyclerViewAdapter(private val notes: List<NoteEntity>) :
     }
 
     override fun getItemCount() = notes.size
+
+    fun update(notes: List<Note>) {
+        this.notes = notes
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var noteTitleTextView: TextView? = null

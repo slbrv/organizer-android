@@ -1,9 +1,9 @@
-package com.slbrv.organizer.data
+package com.slbrv.organizer.data.converter
 
 import androidx.room.TypeConverter
 import java.util.*
 
-class DbConverters {
+class DatabaseConverters {
 
     @TypeConverter
     fun timestampToDate(value: Long?): Date? {

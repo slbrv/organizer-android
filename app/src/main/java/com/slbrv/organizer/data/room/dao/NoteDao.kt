@@ -1,19 +1,23 @@
 package com.slbrv.organizer.data.room.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.slbrv.organizer.data.room.entity.note.NoteEntity
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.slbrv.organizer.data.room.entity.note.Note
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM notes")
-    fun getAll(): List<NoteEntity>
+    @Query("SELECT * FROM note")
+    fun getAll(): LiveData<List<Note>>
 
-    @Query("SELECT * FROM notes WHERE :id")
-    fun get(id: Int): NoteEntity
+    @Query("SELECT * FROM note WHERE :id")
+    fun get(id: Long): Note
+
+    @Insert
+    fun insert(note: Note): Long
+
+    @Update
+    fun update(note: Note)
 
     @Delete
-    fun delete(note: NoteEntity)
+    fun delete(note: Note)
 } 
