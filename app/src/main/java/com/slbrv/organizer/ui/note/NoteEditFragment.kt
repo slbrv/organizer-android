@@ -79,7 +79,7 @@ class NoteEditFragment : Fragment() {
 
     private fun updateNote() {
         note.title = noteTitleEditText.text.toString()
-        note.content = noteContentEditText.toString()
+        note.content = noteContentEditText.text.toString()
         note.editDate = Calendar.getInstance().time
         // note.project =
         // note.vanish =
