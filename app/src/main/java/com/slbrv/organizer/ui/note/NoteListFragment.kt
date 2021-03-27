@@ -1,5 +1,6 @@
 package com.slbrv.organizer.ui.note
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,8 +24,6 @@ class NoteListFragment : Fragment() {
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteRecyclerView: RecyclerView
 
-    private lateinit var notesLiveData: LiveData<List<Note>>
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,29 +32,24 @@ class NoteListFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_notes, container, false)
         noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
-        notesLiveData = Room.databaseBuilder(
-            requireContext(),
-            OrganizerDatabase::class.java,
-            Config.ORGANIZER_DATABASE_NAME
-        ).build().noteDao().getAll()
+        val navController = NavHostFragment.findNavController(this)
 
-        val adapter = NoteRecyclerViewAdapter(ArrayList())
-        notesLiveData.observe(viewLifecycleOwner, {
+        val addActionButton: FloatingActionButton = root.findViewById(R.id.note_add_action_button)
+        addActionButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putLong("note_id", 0)
+            navController.navigate(R.id.nav_note, bundle)
+        }
+
+        val adapter = NoteRecyclerViewAdapter(context, ArrayList())
+
+        noteViewModel.getAll().observe(viewLifecycleOwner, {
             adapter.update(it)
         })
 
         noteRecyclerView = root.findViewById(R.id.note_recycler_view)
         noteRecyclerView.layoutManager = LinearLayoutManager(context)
         noteRecyclerView.adapter = adapter
-
-        val navController = NavHostFragment.findNavController(this)
-
-        val addActionButton: FloatingActionButton = root.findViewById(R.id.note_add_action_button)
-        addActionButton.setOnClickListener {
-            val bundle = Bundle();
-            bundle.putLong("noteId", 0);
-            navController.navigate(R.id.nav_note)
-        }
 
         return root
     }

@@ -29,9 +29,5 @@
     <fragment
         android:id="@+id/nav_note"
         android:name="com.slbrv.organizer.ui.note.NoteEditFragment"
-        android:label="@string/title_note" >
-        <action
-            android:id="@+id/action_nav_note_to_nav_notes"
-            app:destination="@id/nav_notes" />
-    </fragment>
+        android:label="@string/title_note" />
 </navigation>

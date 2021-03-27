@@ -7,9 +7,9 @@ import com.slbrv.organizer.data.room.entity.note.Note
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM note")
-    fun getAll(): LiveData<List<Note>>
+    fun getAll(): List<Note>
 
-    @Query("SELECT * FROM note WHERE :id")
+    @Query("SELECT * FROM note WHERE id=:id")
     fun get(id: Long): Note
 
     @Insert

@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.room.database.OrganizerDatabase
 import com.slbrv.organizer.data.room.entity.note.Note
 import java.util.*
 
@@ -42,28 +41,26 @@ class NoteEditFragment : Fragment() {
         toolbar.navigationIcon?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
-        noteId = savedInstanceState?.getLong("noteId") ?: 0
-
+        noteId = arguments?.getLong("note_id") ?: 0
+        Log.i("APP", "note id: $noteId")
         if (noteId > 0) {
-
+            noteViewModel.get(noteId).observe(viewLifecycleOwner, {
+                note = it
+                noteTitleEditText.setText(note.title)
+                noteContentEditText.setText(note.content)
+            })
         } else {
             val time = Calendar.getInstance().time
-            val title = resources.getString(R.string.title)
-            val content = resources.getString(R.string.content)
-            val project = ""
-            note = Note(null, title, content, time, time, project, false)
-            val idLiveData = noteViewModel.insertNote(note)
-            idLiveData.observe(viewLifecycleOwner, {
-                note.id = it
-            })
+            note = Note(null, "", "", time, time, "", false)
         }
 
         return root
     }
 
-    override fun onStop() {
-        super.onStop()
-        updateNote()
+    override fun onPause() {
+        super.onPause()
+        if (note.id == null) insertNote()
+        else updateNote()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,12 +74,27 @@ class NoteEditFragment : Fragment() {
         return true
     }
 
-    private fun updateNote() {
+    private fun scrapeData(note: Note) {
         note.title = noteTitleEditText.text.toString()
         note.content = noteContentEditText.text.toString()
         note.editDate = Calendar.getInstance().time
-        // note.project =
-        // note.vanish =
-        noteViewModel.updateNote(note)
+        note.project = ""
+        note.vanish = false
+    }
+
+    private fun insertNote() {
+        scrapeData(note)
+        if (note.title.isNotEmpty() || note.content.isNotEmpty()) {
+            noteViewModel.insert(note)
+        }
+    }
+
+    private fun updateNote() {
+        scrapeData(note)
+        if (note.title.isEmpty() && note.content.isEmpty()) {
+            noteViewModel.delete(note)
+        } else {
+            noteViewModel.update(note)
+        }
     }
 }
