@@ -12,11 +12,10 @@ import com.slbrv.organizer.data.room.database.OrganizerDatabase
 import com.slbrv.organizer.data.room.entity.note.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
-    // Взаимодействие между фрагментами с помощью общей ViewModel
+    private val allData = MutableLiveData<List<Note>>()
 
     fun insert(note: Note): LiveData<Long> {
         val idData = MutableLiveData<Long>()
@@ -27,6 +26,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
                 Config.ORGANIZER_DATABASE_NAME
             ).build().noteDao()
             idData.postValue(noteDao.insert(note))
+            allData.postValue(noteDao.getAll())
         }
         return idData
     }
@@ -39,6 +39,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
                 Config.ORGANIZER_DATABASE_NAME
             ).build().noteDao()
             noteDao.update(note)
+            allData.postValue(noteDao.getAll())
         }
     }
 
@@ -50,6 +51,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
                 Config.ORGANIZER_DATABASE_NAME
             ).build().noteDao()
             noteDao.delete(note)
+            allData.postValue(noteDao.getAll())
         }
     }
 
@@ -67,15 +69,14 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAll(): LiveData<List<Note>> {
-        val data = MutableLiveData<List<Note>>()
         viewModelScope.launch(Dispatchers.IO) {
             val noteDao = Room.databaseBuilder(
                 getApplication(),
                 OrganizerDatabase::class.java,
                 Config.ORGANIZER_DATABASE_NAME
             ).build().noteDao()
-            data.postValue(noteDao.getAll())
+            allData.postValue(noteDao.getAll())
         }
-        return data
+        return allData
     }
 }

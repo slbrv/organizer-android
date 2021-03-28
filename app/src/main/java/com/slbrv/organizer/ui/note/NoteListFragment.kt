@@ -30,7 +30,7 @@ class NoteListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_notes, container, false)
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        noteViewModel = ViewModelProvider(requireActivity()).get(NoteViewModel::class.java)
 
         val navController = NavHostFragment.findNavController(this)
 

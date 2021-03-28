@@ -32,7 +32,7 @@ class NoteEditFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_note_edit, container, false)
 
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        noteViewModel = ViewModelProvider(requireActivity()).get(NoteViewModel::class.java)
         noteTitleEditText = root.findViewById(R.id.note_title_edit_text)
         noteContentEditText = root.findViewById(R.id.note_content_edit_text)
         toolbar = root.findViewById(R.id.toolbar_note_edit_fragment)
