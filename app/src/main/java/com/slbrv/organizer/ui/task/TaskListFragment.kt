@@ -35,7 +35,7 @@ class TaskListFragment : Fragment() {
 
         taskRecyclerView = view.findViewById(R.id.task_recycler_view)
         taskRecyclerView.layoutManager = LinearLayoutManager(context)
-        taskRecyclerView.adapter = TaskRecyclerViewAdapter(tasks)
+        taskRecyclerView.adapter = TaskRecyclerViewAdapter(requireContext(), tasks)
 
         return view
     }

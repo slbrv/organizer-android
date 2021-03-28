@@ -1,19 +1,22 @@
 package com.slbrv.organizer.ui.task
 
+import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.room.task.TaskEntity
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TaskRecyclerViewAdapter(
+    private val context: Context,
     private val tasks: List<TaskEntity>
 ) : RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder>() {
 
@@ -28,12 +31,35 @@ class TaskRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.taskTextView.text = tasks[position].task
+        fun markTask() {
+            holder.taskTextView.text = tasks[position].task
+            if(tasks[position].checked) {
+                holder.taskTextView.paintFlags =
+                    holder.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                holder.taskTextView.setTextColor(
+                    ContextCompat
+                        .getColor(context, R.color.secondary_text)
+                )
+            } else {
+                holder.taskTextView.paintFlags =
+                holder.taskTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                holder.taskTextView.setTextColor(
+                    ContextCompat
+                        .getColor(context, R.color.primary_text)
+                )
+            }
+        }
+
+        markTask()
         holder.taskTargetDateTextView.text =
             SimpleDateFormat("yy-MM-dd HH:mm", Locale.US)
                 .format(tasks[position].targetDate)
         holder.taskProjectTextView.text = tasks[position].project
         holder.taskCheckBox.isChecked = tasks[position].checked
+        holder.taskCheckBox.setOnClickListener {
+            tasks[position].checked = holder.taskCheckBox.isChecked
+            markTask()
+        }
         holder.layout.setOnClickListener {
 
         }
