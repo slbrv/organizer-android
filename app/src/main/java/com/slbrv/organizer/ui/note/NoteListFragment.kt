@@ -1,23 +1,16 @@
 package com.slbrv.organizer.ui.note
 
-import android.util.Log
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.slbrv.organizer.Config
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.room.database.OrganizerDatabase
-import com.slbrv.organizer.data.room.entity.note.Note
-import kotlin.collections.ArrayList
-import android.os.Bundle as Bundle
 
 class NoteListFragment : Fragment() {
 

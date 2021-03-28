@@ -20,9 +20,10 @@ class TaskListFragment : Fragment() {
     ): View? {
         taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_notes, container, false)
-        taskViewModel.text.observe(viewLifecycleOwner, Observer {
+        taskViewModel.text.observe(viewLifecycleOwner, {
             
         })
         return root
     }
+
 }

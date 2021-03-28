@@ -41,5 +41,6 @@
     <string name="note_content">Содержание заметки</string>
     <string name="title">Название</string>
     <string name="content">Содержание...</string>
+    <string name="project">Проект</string>
     <string name="note_editing">Редактирование заметки</string>
 </resources>

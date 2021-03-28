@@ -19,6 +19,7 @@ class NoteEditFragment : Fragment() {
 
     private lateinit var noteTitleEditText: EditText
     private lateinit var noteContentEditText: EditText
+    private lateinit var noteProjectEditText: EditText
     private lateinit var toolbar: Toolbar
 
     private lateinit var note: Note
@@ -35,6 +36,7 @@ class NoteEditFragment : Fragment() {
         noteViewModel = ViewModelProvider(requireActivity()).get(NoteViewModel::class.java)
         noteTitleEditText = root.findViewById(R.id.note_title_edit_text)
         noteContentEditText = root.findViewById(R.id.note_content_edit_text)
+        noteProjectEditText = root.findViewById(R.id.note_project_edit_text)
         toolbar = root.findViewById(R.id.toolbar_note_edit_fragment)
         toolbar.setNavigationIcon(R.drawable.ic_back_button)
         val color = ContextCompat.getColor(requireContext(), R.color.white)
@@ -42,12 +44,12 @@ class NoteEditFragment : Fragment() {
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         noteId = arguments?.getLong("note_id") ?: 0
-        Log.i("APP", "note id: $noteId")
         if (noteId > 0) {
             noteViewModel.get(noteId).observe(viewLifecycleOwner, {
                 note = it
                 noteTitleEditText.setText(note.title)
                 noteContentEditText.setText(note.content)
+                noteProjectEditText.setText(note.project)
             })
         } else {
             val time = Calendar.getInstance().time
@@ -78,7 +80,7 @@ class NoteEditFragment : Fragment() {
         note.title = noteTitleEditText.text.toString()
         note.content = noteContentEditText.text.toString()
         note.editDate = Calendar.getInstance().time
-        note.project = ""
+        note.project = noteProjectEditText.text.toString()
         note.vanish = false
     }
 

@@ -42,5 +42,6 @@
     <string name="add_button" translatable="false">Add button</string>
     <string name="title">Title</string>
     <string name="content">Content...</string>
+    <string name="project">Project</string>
     <string name="note_editing">Note editing</string>
 </resources>

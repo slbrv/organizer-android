@@ -51,8 +51,20 @@
             android:padding="4dp"
             android:selectAllOnFocus="false"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/note_project_edit_text"
             app:layout_constraintTop_toBottomOf="@+id/note_title_edit_text" />
+
+        <EditText
+            android:id="@+id/note_project_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/project"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
