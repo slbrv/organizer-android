@@ -1,12 +1,12 @@
-package com.slbrv.organizer.data.room.entity.note
+package com.slbrv.organizer.data.room.note
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
-data class Note(
+@Entity(tableName = "notes")
+data class NoteEntity(
     @PrimaryKey(autoGenerate = true) var id: Long?,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "content") var content: String,

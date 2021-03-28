@@ -2,24 +2,21 @@ package com.slbrv.organizer.ui.note
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.room.entity.note.Note
+import com.slbrv.organizer.data.room.note.NoteEntity
 import java.text.DateFormat
 
 class NoteRecyclerViewAdapter(
     private val context: Context?,
-    private var notes: List<Note>) :
-    RecyclerView.Adapter<NoteRecyclerViewAdapter.ViewHolder>() {
+    private var notes: List<NoteEntity>
+) : RecyclerView.Adapter<NoteRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -52,8 +49,8 @@ class NoteRecyclerViewAdapter(
 
     override fun getItemCount() = notes.size
 
-    fun update(notes: List<Note>) {
-        this.notes = notes
+    fun update(noteEntities: List<NoteEntity>) {
+        this.notes = noteEntities
         notifyDataSetChanged()
     }
 

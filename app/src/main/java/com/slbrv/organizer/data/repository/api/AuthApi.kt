@@ -1,7 +1,7 @@
 package com.slbrv.organizer.data.repository.api
 
-import com.slbrv.organizer.data.room.entity.auth.AuthBody
-import com.slbrv.organizer.data.room.entity.auth.AuthResponse
+import com.slbrv.organizer.data.auth.AuthBody
+import com.slbrv.organizer.data.auth.AuthResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

@@ -2,7 +2,6 @@ package com.slbrv.organizer.ui.note
 
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
@@ -10,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.room.entity.note.Note
+import com.slbrv.organizer.data.room.note.NoteEntity
 import java.util.*
 
 class NoteEditFragment : Fragment() {
@@ -22,7 +21,7 @@ class NoteEditFragment : Fragment() {
     private lateinit var noteProjectEditText: EditText
     private lateinit var toolbar: Toolbar
 
-    private lateinit var note: Note
+    private lateinit var noteEntity: NoteEntity
 
     private var noteId: Long = 0
 
@@ -46,14 +45,14 @@ class NoteEditFragment : Fragment() {
         noteId = arguments?.getLong("note_id") ?: 0
         if (noteId > 0) {
             noteViewModel.get(noteId).observe(viewLifecycleOwner, {
-                note = it
-                noteTitleEditText.setText(note.title)
-                noteContentEditText.setText(note.content)
-                noteProjectEditText.setText(note.project)
+                noteEntity = it
+                noteTitleEditText.setText(noteEntity.title)
+                noteContentEditText.setText(noteEntity.content)
+                noteProjectEditText.setText(noteEntity.project)
             })
         } else {
             val time = Calendar.getInstance().time
-            note = Note(null, "", "", time, time, "", false)
+            noteEntity = NoteEntity(null, "", "", time, time, "", false)
         }
 
         return root
@@ -61,7 +60,7 @@ class NoteEditFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        if (note.id == null) insertNote()
+        if (noteEntity.id == null) insertNote()
         else updateNote()
     }
 
@@ -76,27 +75,27 @@ class NoteEditFragment : Fragment() {
         return true
     }
 
-    private fun scrapeData(note: Note) {
-        note.title = noteTitleEditText.text.toString()
-        note.content = noteContentEditText.text.toString()
-        note.editDate = Calendar.getInstance().time
-        note.project = noteProjectEditText.text.toString()
-        note.vanish = false
+    private fun scrapeData(noteEntity: NoteEntity) {
+        noteEntity.title = noteTitleEditText.text.toString()
+        noteEntity.content = noteContentEditText.text.toString()
+        noteEntity.editDate = Calendar.getInstance().time
+        noteEntity.project = noteProjectEditText.text.toString()
+        noteEntity.vanish = false
     }
 
     private fun insertNote() {
-        scrapeData(note)
-        if (note.title.isNotEmpty() || note.content.isNotEmpty()) {
-            noteViewModel.insert(note)
+        scrapeData(noteEntity)
+        if (noteEntity.title.isNotEmpty() || noteEntity.content.isNotEmpty()) {
+            noteViewModel.insert(noteEntity)
         }
     }
 
     private fun updateNote() {
-        scrapeData(note)
-        if (note.title.isEmpty() && note.content.isEmpty()) {
-            noteViewModel.delete(note)
+        scrapeData(noteEntity)
+        if (noteEntity.title.isEmpty() && noteEntity.content.isEmpty()) {
+            noteViewModel.delete(noteEntity)
         } else {
-            noteViewModel.update(note)
+            noteViewModel.update(noteEntity)
         }
     }
 }

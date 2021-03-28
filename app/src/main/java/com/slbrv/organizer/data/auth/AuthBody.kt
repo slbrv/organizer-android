@@ -1,4 +1,4 @@
-package com.slbrv.organizer.data.room.entity.auth
+package com.slbrv.organizer.data.auth
 
 class AuthBody(val username: String,
                val email: String,

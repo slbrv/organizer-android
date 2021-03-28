@@ -4,4 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.note.NoteListFragment"/>
+    tools:context=".ui.note.NoteListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/task_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="60dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
