@@ -16,4 +16,13 @@
     <style name="Theme.Organizer.FloatingActionButton" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:backgroundTint">@color/purple_500</item>
     </style>
+
+    <style name="Theme.Organizer.BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Theme.Organizer.BottomSheetStyle</item>
+    </style>
+
+    <style name="Theme.Organizer.BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 </resources>

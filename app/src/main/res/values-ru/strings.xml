@@ -42,5 +42,8 @@
     <string name="title">Название</string>
     <string name="content">Содержание...</string>
     <string name="project">Проект</string>
+    <string name="task">Задача</string>
+    <string name="target_date">Целевая дата</string>
+    <string name="target_time">Целевое время</string>
     <string name="note_editing">Редактирование заметки</string>
 </resources>

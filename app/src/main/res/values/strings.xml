@@ -43,5 +43,8 @@
     <string name="title">Title</string>
     <string name="content">Content...</string>
     <string name="project">Project</string>
+    <string name="task">Task</string>
+    <string name="target_date">Target date</string>
+    <string name="target_time">Target time</string>
     <string name="note_editing">Note editing</string>
 </resources>
