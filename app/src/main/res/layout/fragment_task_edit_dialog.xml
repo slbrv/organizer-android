@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/task_edit_text"
+            android:id="@+id/task_dialog_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -31,12 +31,12 @@
             android:inputType="text"
             android:theme="@style/Theme.Organizer"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/task_add_button"
+            app:layout_constraintEnd_toStartOf="@+id/task_dialog_add_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/task_add_button"
+            android:id="@+id/task_dialog_add_button"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="6dp"
@@ -57,18 +57,20 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <Button
-            android:id="@+id/task_target_date_button"
+            android:id="@+id/task_dialog_target_date_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_calendar_24"
             android:enabled="true"
             android:text="@string/target_date"
             android:theme="@style/Theme.Organizer" />
 
         <Button
-            android:id="@+id/task_project_button"
+            android:id="@+id/task_dialog_project_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:drawableStart="@drawable/ic_baseline_folder_24"
             android:enabled="true"
             android:maxLength="12"
             android:maxLines="1"

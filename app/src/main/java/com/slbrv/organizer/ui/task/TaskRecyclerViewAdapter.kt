@@ -33,7 +33,7 @@ class TaskRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         fun markTask() {
             holder.taskTextView.text = tasks[position].task
-            if(tasks[position].checked) {
+            if (tasks[position].checked) {
                 holder.taskTextView.paintFlags =
                     holder.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 holder.taskTextView.setTextColor(
@@ -42,7 +42,7 @@ class TaskRecyclerViewAdapter(
                 )
             } else {
                 holder.taskTextView.paintFlags =
-                holder.taskTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    holder.taskTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 holder.taskTextView.setTextColor(
                     ContextCompat
                         .getColor(context, R.color.primary_text)
@@ -52,7 +52,7 @@ class TaskRecyclerViewAdapter(
 
         markTask()
         holder.taskTargetDateTextView.text =
-            SimpleDateFormat("yy-MM-dd HH:mm", Locale.US)
+            SimpleDateFormat("yy-MM-dd", Locale.US)
                 .format(tasks[position].targetDate)
         holder.taskProjectTextView.text = tasks[position].project
         holder.taskCheckBox.isChecked = tasks[position].checked

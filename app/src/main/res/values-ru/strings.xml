@@ -46,4 +46,7 @@
     <string name="target_date">Целевая дата</string>
     <string name="target_time">Целевое время</string>
     <string name="note_editing">Редактирование заметки</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="project_name">Название проекта</string>
 </resources>

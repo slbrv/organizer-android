@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.slbrv.organizer.Config
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.room.note.NoteEntity
 import java.util.*
@@ -79,7 +80,10 @@ class NoteEditFragment : Fragment() {
         noteEntity.title = noteTitleEditText.text.toString()
         noteEntity.content = noteContentEditText.text.toString()
         noteEntity.editDate = Calendar.getInstance().time
-        noteEntity.project = noteProjectEditText.text.toString()
+        var project = noteProjectEditText.text.toString()
+        if(project.length > Config.UI.MAX_PROJECT_NAME_LENGTH)
+            project = project.substring(0, Config.UI.MAX_PROJECT_NAME_LENGTH)
+        noteEntity.project = project
         noteEntity.vanish = false
     }
 

@@ -47,4 +47,7 @@
     <string name="target_date">Target date</string>
     <string name="target_time">Target time</string>
     <string name="note_editing">Note editing</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="project_name">Project name</string>
 </resources>

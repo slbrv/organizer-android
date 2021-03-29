@@ -14,6 +14,7 @@
         android:layout_height="0dp"
         android:layout_gravity="end"
         android:layout_weight="1"
+        android:maxLines="1"
         android:singleLine="true"
         android:text="@string/note_title"
         android:textColor="#000000"
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:maxLines="1"
             android:textSize="12sp" />
     </LinearLayout>
 
