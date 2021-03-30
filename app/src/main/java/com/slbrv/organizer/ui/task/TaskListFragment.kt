@@ -3,6 +3,7 @@ package com.slbrv.organizer.ui.task
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +33,13 @@ class TaskListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
 
         val tasks = ArrayList<TaskEntity>()
+
         val selectedTask = MutableLiveData<Int>()
         val adapter = TaskRecyclerViewAdapter(requireContext(), selectedTask, tasks)
+
+        taskViewModel.getAll().observe(viewLifecycleOwner, {
+            adapter.update(it)
+        })
 
         taskRecyclerView = view.findViewById(R.id.task_recycler_view)
         taskRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -62,10 +68,14 @@ class TaskListFragment : Fragment() {
         val taskEditFragment = TaskEditDialogFragment.getInstance(taskData, task)
         taskEditFragment.show(parentFragmentManager, taskEditFragment.tag)
         taskData.observe(viewLifecycleOwner, {
-            if(id >= 0)
+            if(id >= 0) {
                 tasks[id] = it
-            else
+                taskViewModel.update(it)
+            }
+            else {
                 tasks.add(it)
+                taskViewModel.insert(it)
+            }
             adapter.notifyDataSetChanged()
         })
     }
