@@ -49,8 +49,8 @@ class NoteRecyclerViewAdapter(
 
     override fun getItemCount() = notes.size
 
-    fun update(noteEntities: List<NoteEntity>) {
-        this.notes = noteEntities
+    fun update(notes: List<NoteEntity>) {
+        this.notes = notes
         notifyDataSetChanged()
     }
 

@@ -8,16 +8,21 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
+import com.slbrv.organizer.data.room.note.NoteEntity
 import com.slbrv.organizer.data.room.task.TaskEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TaskRecyclerViewAdapter(
     private val context: Context,
-    private val tasks: List<TaskEntity>
+    private val selected: MutableLiveData<Int>,
+    private var tasks: List<TaskEntity>,
 ) : RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,7 +57,7 @@ class TaskRecyclerViewAdapter(
 
         markTask()
         holder.taskTargetDateTextView.text =
-            SimpleDateFormat("yy-MM-dd", Locale.US)
+            SimpleDateFormat("yyyy-MM-dd", Locale.US)
                 .format(tasks[position].targetDate)
         holder.taskProjectTextView.text = tasks[position].project
         holder.taskCheckBox.isChecked = tasks[position].checked
@@ -60,13 +65,19 @@ class TaskRecyclerViewAdapter(
             tasks[position].checked = holder.taskCheckBox.isChecked
             markTask()
         }
-        holder.layout.setOnClickListener {
 
+        holder.layout.setOnClickListener {
+            selected.value = position
         }
     }
 
     override fun getItemCount(): Int {
         return tasks.size
+    }
+
+    fun update(tasks: List<TaskEntity>) {
+        this.tasks = tasks
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

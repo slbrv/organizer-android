@@ -20,25 +20,20 @@ import kotlin.collections.ArrayList
 
 class TaskListFragment : Fragment() {
 
-    data class TaskEditData (
-        val task: String,
-        val project: String,
-        val date: Date
-    )
-
     private lateinit var taskViewModel: TaskViewModel
     private lateinit var taskRecyclerView: RecyclerView
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
 
         val tasks = ArrayList<TaskEntity>()
-        val adapter = TaskRecyclerViewAdapter(requireContext(), tasks)
+        val selectedTask = MutableLiveData<Int>()
+        val adapter = TaskRecyclerViewAdapter(requireContext(), selectedTask, tasks)
 
         taskRecyclerView = view.findViewById(R.id.task_recycler_view)
         taskRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -47,17 +42,32 @@ class TaskListFragment : Fragment() {
         val addActionButton: FloatingActionButton = view.findViewById(R.id.task_add_action_button)
 
         addActionButton.setOnClickListener {
-            val taskData = MutableLiveData<TaskEditData>()
-            val taskEditFragment = TaskEditDialogFragment.getInstance(taskData)
-            taskEditFragment.show(parentFragmentManager, taskEditFragment.tag)
-            taskData.observe(viewLifecycleOwner, {
-                val time = Calendar.getInstance().time
-                tasks.add(TaskEntity(null, it.task, time, it.date, it.project, false))
-                adapter.notifyDataSetChanged()
-            })
+            onEditTask(adapter, tasks, -1)
         }
 
+        selectedTask.observe(viewLifecycleOwner, {
+            onEditTask(adapter, tasks, it)
+        })
+
         return view
+    }
+
+    private fun onEditTask(
+        adapter: TaskRecyclerViewAdapter,
+        tasks: ArrayList<TaskEntity>,
+        id: Int
+    ) {
+        val taskData = MutableLiveData<TaskEntity>()
+        val task = if(id >= 0) tasks[id] else null
+        val taskEditFragment = TaskEditDialogFragment.getInstance(taskData, task)
+        taskEditFragment.show(parentFragmentManager, taskEditFragment.tag)
+        taskData.observe(viewLifecycleOwner, {
+            if(id >= 0)
+                tasks[id] = it
+            else
+                tasks.add(it)
+            adapter.notifyDataSetChanged()
+        })
     }
 
 }

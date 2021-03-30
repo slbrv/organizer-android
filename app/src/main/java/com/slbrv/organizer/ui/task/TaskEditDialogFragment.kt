@@ -12,25 +12,32 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.slbrv.organizer.Config
 import com.slbrv.organizer.R
+import com.slbrv.organizer.data.room.task.TaskEntity
+import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TaskEditDialogFragment(val data: MutableLiveData<TaskListFragment.TaskEditData>) :
+class TaskEditDialogFragment(
+    private val data: MutableLiveData<TaskEntity>,
+    private val task: TaskEntity
+) :
     BottomSheetDialogFragment() {
 
     companion object {
-        fun getInstance(data: MutableLiveData<TaskListFragment.TaskEditData>)
+        fun getInstance(
+            data: MutableLiveData<TaskEntity>,
+            task: TaskEntity?
+        )
                 : TaskEditDialogFragment {
-            val fragment = TaskEditDialogFragment(data)
+            val date = Calendar.getInstance().time
+            val inTask = task?.copy() ?: TaskEntity(null, "", date, date, "", false)
+            val fragment = TaskEditDialogFragment(data, inTask)
             val bundle = Bundle()
             fragment.arguments = bundle
+
             return fragment
         }
     }
-
-    private var task = ""
-    private var projectName = ""
-    private var targetDate = Date()
 
     private lateinit var taskEditText: EditText
     private lateinit var taskTargetDateButton: Button
@@ -54,6 +61,12 @@ class TaskEditDialogFragment(val data: MutableLiveData<TaskListFragment.TaskEdit
         taskProjectButton = view.findViewById(R.id.task_dialog_project_button)
         taskAddButton = view.findViewById(R.id.task_dialog_add_button)
 
+        taskEditText.setText(task.task)
+        taskTargetDateButton.text = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            .format(task.targetDate)
+        val projectText = if (task.project.isEmpty()) context?.resources?.getString(R.string.project) else task.project
+        taskProjectButton.setText(projectText)
+
         taskTargetDateButton.setOnClickListener {
             onTargetDateButtonClick()
         }
@@ -73,7 +86,7 @@ class TaskEditDialogFragment(val data: MutableLiveData<TaskListFragment.TaskEdit
         val listener = { picker: DatePicker, y: Int, m: Int, d: Int ->
             val c = Calendar.getInstance()
             c.set(y, m, d)
-            targetDate = c.time
+            task.targetDate = c.time
             taskTargetDateButton.text = "$y-$m-$d"
         }
         val calendar = Calendar.getInstance()
@@ -90,10 +103,10 @@ class TaskEditDialogFragment(val data: MutableLiveData<TaskListFragment.TaskEdit
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(R.string.project_name)
             .setPositiveButton(R.string.ok) { d, id ->
-                projectName = projectEditText.text.toString()
-                if(projectName.length > Config.UI.MAX_PROJECT_NAME_LENGTH)
-                    projectName = projectName.substring(0, Config.UI.MAX_PROJECT_NAME_LENGTH)
-                taskProjectButton.text = projectName
+                task.project = projectEditText.text.toString()
+                if (task.project.length > Config.UI.MAX_PROJECT_NAME_LENGTH)
+                    task.project = task.project.substring(0, Config.UI.MAX_PROJECT_NAME_LENGTH)
+                taskProjectButton.text = task.project
             }
             .setNegativeButton(R.string.cancel) { d, id ->
                 dialog?.cancel()
@@ -102,9 +115,10 @@ class TaskEditDialogFragment(val data: MutableLiveData<TaskListFragment.TaskEdit
     }
 
     private fun onTaskAddButtonClick() {
-        task = taskEditText.text.toString()
-        if(task.isNotEmpty())
-            data.value = TaskListFragment.TaskEditData(task, projectName, targetDate)
+        task.task = taskEditText.text.toString()
+        if (task.task.isNotEmpty()) {
+            data.value = task
+        }
         dismiss()
     }
 }
