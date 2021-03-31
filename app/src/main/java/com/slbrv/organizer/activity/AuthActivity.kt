@@ -20,50 +20,13 @@ class AuthActivity : AppCompatActivity() {
         }
 
         val viewModel: AuthViewModel by viewModels()
-        val token = viewModel.token
-        token.observe(this, { body ->
-            run {
-                when {
-                    body == "400" -> Toast.makeText(
-                        this,
-                        R.string.user_with_this_username_or_email_already_exists,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    body == "403" -> Toast.makeText(
-                        this,
-                        R.string.incorrect_username_or_password,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    body.length < 5 -> {
-                        Toast.makeText(
-                            this,
-                            R.string.auth_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("APP", "Body $body")
-                    }
-                    body.substring(0, 5) == "token" -> {
-                        intent = Intent()
-                        intent.putExtra("token", body.substring(5))
-                        setResult(RESULT_OK, intent)
-                        finish()
-                    }
-                    else -> {
-                        Toast.makeText(
-                            this,
-                            R.string.auth_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("APP", "Body $body")
-                    }
-                }
-            }
+        val body = viewModel.body
+        body.observe(this, {
+            tokenObserve(it)
         })
     }
 
-    override fun onBackPressed() {
-
-    }
+    override fun onBackPressed() { }
 
     private fun setSignUpFragment() {
         supportFragmentManager
@@ -74,5 +37,47 @@ class AuthActivity : AppCompatActivity() {
                 "sign_up_fragment"
             )
             .commitNow()
+    }
+
+    private fun tokenObserve(token: String) {
+        when {
+            token == "400" -> Toast.makeText(
+                this,
+                R.string.user_with_this_username_or_email_already_exists,
+                Toast.LENGTH_SHORT
+            ).show()
+            token == "403" -> Toast.makeText(
+                this,
+                R.string.incorrect_username_or_password,
+                Toast.LENGTH_SHORT
+            ).show()
+            token.length < 5 -> {
+                Toast.makeText(
+                    this,
+                    R.string.auth_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.e("APP", "Body $token")
+            }
+            token.substring(0, 5) == "token" -> {
+                success(token)
+            }
+            else -> {
+                Toast.makeText(
+                    this,
+                    R.string.auth_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.e("APP", "Body $token")
+            }
+        }
+    }
+
+    private fun success(body: String) {
+        intent = Intent()
+        intent.putExtra("token", body.substring(5))
+        intent.putExtra("secret")
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

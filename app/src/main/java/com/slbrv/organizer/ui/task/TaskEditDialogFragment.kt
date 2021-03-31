@@ -2,12 +2,13 @@ package com.slbrv.organizer.ui.task
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.icu.text.DateTimePatternGenerator.PatternInfo.OK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.slbrv.organizer.Config
@@ -64,8 +65,9 @@ class TaskEditDialogFragment(
         taskEditText.setText(task.task)
         taskTargetDateButton.text = SimpleDateFormat("yyyy-MM-dd", Locale.US)
             .format(task.targetDate)
-        val projectText = if (task.project.isEmpty()) context?.resources?.getString(R.string.project) else task.project
-        taskProjectButton.setText(projectText)
+        val projectText =
+            if (task.project.isEmpty()) context?.resources?.getString(R.string.project) else task.project
+        taskProjectButton.text = projectText
 
         taskTargetDateButton.setOnClickListener {
             onTargetDateButtonClick()

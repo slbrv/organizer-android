@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.slbrv.organizer.data.auth.AuthBody
+import com.slbrv.organizer.data.auth.AuthResponseBody
 import com.slbrv.organizer.data.repository.AuthRepository
 
 class AuthViewModel : ViewModel() {
 
     private val repo = AuthRepository()
-    private val mutableToken = MutableLiveData<String>()
+    private val mutableToken = MutableLiveData<AuthResponseBody>()
 
-    val token: LiveData<String> get() = mutableToken
+    val body: LiveData<AuthResponseBody> get() = mutableToken
 
     fun signUp(data: AuthBody) {
         repo.signUp(mutableToken, data)

@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import com.slbrv.organizer.Config
 import com.slbrv.organizer.data.auth.AuthBody
 import com.slbrv.organizer.data.auth.AuthResponse
+import com.slbrv.organizer.data.auth.AuthResponseBody
+import com.slbrv.organizer.data.auth.PublicUserData
 import com.slbrv.organizer.data.repository.api.AuthApi
 import retrofit2.Call
 import retrofit2.Callback
@@ -67,12 +69,10 @@ class AuthRepository {
         authApi.checkToken(token).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if(response.isSuccessful) {
-                    val code = response.code()
-                    when(code) {
+                    when(response.code()) {
                         200 -> tokenLiveData.postValue("token$token")
                         else -> tokenLiveData.postValue("")
                     }
-
                 } else {
                     Log.e("APP", "ERR, status: ${response.body()} token: $token")
                     tokenLiveData.postValue("")
@@ -82,6 +82,29 @@ class AuthRepository {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("APP", "onFailure() ${t.message}")
                 tokenLiveData.postValue("fail")
+            }
+        })
+    }
+
+    fun getPublicUserData(data: MutableLiveData<PublicUserData>, token: String) {
+        authApi.getPublicUserData(token).enqueue(object : Callback<PublicUserData> {
+            override fun onResponse(
+                call: Call<PublicUserData>,
+                response: Response<PublicUserData>
+            ) {
+                if(response.isSuccessful) {
+                    when(response.code()) {
+                        200 -> data.postValue(response.body())
+                        else -> data.postValue(PublicUserData("", ""))
+                    }
+                } else {
+                    Log.e("APP", "ERR, status: ${response.body()} token: $token")
+                    data.postValue(PublicUserData("", ""))
+                }
+            }
+
+            override fun onFailure(call: Call<PublicUserData>, t: Throwable) {
+
             }
         })
     }

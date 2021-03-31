@@ -1,23 +1,17 @@
 package com.slbrv.organizer.ui.task
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.room.task.TaskEntity
-import java.util.*
-import kotlin.collections.ArrayList
 
 class TaskListFragment : Fragment() {
 
@@ -38,7 +32,9 @@ class TaskListFragment : Fragment() {
         val adapter = TaskRecyclerViewAdapter(requireContext(), selectedTask, tasks)
 
         taskViewModel.getAll().observe(viewLifecycleOwner, {
-            adapter.update(it)
+            tasks.clear()
+            tasks.addAll(it)
+            adapter.update(tasks)
         })
 
         taskRecyclerView = view.findViewById(R.id.task_recycler_view)

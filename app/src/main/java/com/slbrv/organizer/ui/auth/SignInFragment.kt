@@ -107,7 +107,6 @@ class SignInFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
-                Log.i("APP", "Body: $body")
             }
 
             Handler(Looper.getMainLooper()).postDelayed({

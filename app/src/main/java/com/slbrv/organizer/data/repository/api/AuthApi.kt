@@ -2,6 +2,7 @@ package com.slbrv.organizer.data.repository.api
 
 import com.slbrv.organizer.data.auth.AuthBody
 import com.slbrv.organizer.data.auth.AuthResponse
+import com.slbrv.organizer.data.auth.PublicUserData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,4 +19,7 @@ interface AuthApi {
 
     @GET("/user/check/{token}")
     fun checkToken(@Path("token") token: String) : Call<String>
+
+    @GET("/user/public/data/{token}")
+    fun getPublicUserData(@Path("token") token: String) : Call<PublicUserData>
 }
