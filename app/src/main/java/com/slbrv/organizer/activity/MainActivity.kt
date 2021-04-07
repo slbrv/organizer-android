@@ -23,8 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val AUTH_TOKEN: String = "token"
     private val AUTH_REQUEST_CODE = 1
 
-    private lateinit var activeFragment: Fragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

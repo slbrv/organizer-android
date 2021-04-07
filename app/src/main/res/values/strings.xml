@@ -7,7 +7,6 @@
     <string name="auth_error">Auth error, please try again</string>
     <string name="connection_error">Connection error. The app works offline</string>
     <string name="username">Username</string>
-    <string name="username_or_email">Username or email</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="repeat_password">Repeat password</string>

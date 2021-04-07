@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.slbrv.organizer.R
+import com.slbrv.organizer.data.auth.AuthResponseBody
 import com.slbrv.organizer.ui.auth.SignUpFragment
 import com.slbrv.organizer.ui.auth.AuthViewModel
 
@@ -26,7 +27,7 @@ class AuthActivity : AppCompatActivity() {
         })
     }
 
-    override fun onBackPressed() { }
+    override fun onBackPressed() {}
 
     private fun setSignUpFragment() {
         supportFragmentManager
@@ -39,44 +40,33 @@ class AuthActivity : AppCompatActivity() {
             .commitNow()
     }
 
-    private fun tokenObserve(token: String) {
-        when {
-            token == "400" -> Toast.makeText(
+    private fun tokenObserve(body: AuthResponseBody) {
+        when (body.status) {
+            200, 201 -> success(body)
+            400 -> Toast.makeText(
                 this,
                 R.string.user_with_this_username_or_email_already_exists,
                 Toast.LENGTH_SHORT
             ).show()
-            token == "403" -> Toast.makeText(
+            403 -> Toast.makeText(
                 this,
                 R.string.incorrect_username_or_password,
                 Toast.LENGTH_SHORT
             ).show()
-            token.length < 5 -> {
-                Toast.makeText(
-                    this,
-                    R.string.auth_error,
-                    Toast.LENGTH_SHORT
-                ).show()
-                Log.e("APP", "Body $token")
-            }
-            token.substring(0, 5) == "token" -> {
-                success(token)
-            }
             else -> {
                 Toast.makeText(
                     this,
                     R.string.auth_error,
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.e("APP", "Body $token")
+                Log.e("APP", "Body $body.token")
             }
         }
     }
 
-    private fun success(body: String) {
+    private fun success(body: AuthResponseBody) {
         intent = Intent()
-        intent.putExtra("token", body.substring(5))
-        intent.putExtra("secret")
+        intent.putExtra("token", body.token)
         setResult(RESULT_OK, intent)
         finish()
     }

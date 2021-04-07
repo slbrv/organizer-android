@@ -3,7 +3,6 @@ package com.slbrv.organizer.ui.auth
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.auth.AuthBody
+import com.slbrv.organizer.data.auth.AuthRequestBody
 
 class SignInFragment : Fragment() {
 
@@ -36,7 +35,7 @@ class SignInFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
-        nameEditText = view.findViewById(R.id.sign_in_username_or_email_edit_view)
+        nameEditText = view.findViewById(R.id.sign_in_username_edit_view)
         passwordEditText = view.findViewById(R.id.sign_in_pwd_edit_view)
         signInButton = view.findViewById(R.id.sign_in_button)
         haveAccountTextView = view.findViewById(R.id.sign_in_have_acc_text_view)
@@ -51,8 +50,8 @@ class SignInFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun validate(field: String, pwd: String): AuthBody? {
-        fun invalid(): AuthBody? {
+    private fun validate(field: String, pwd: String): AuthRequestBody? {
+        fun invalid(): AuthRequestBody? {
             Toast.makeText(
                 context,
                 R.string.invalid_username_or_email_entered,
@@ -66,8 +65,8 @@ class SignInFragment : Fragment() {
 
         return when {
             pwd.length < 6 -> invalid()
-            nameRegex.matches(field) -> AuthBody(field, "", pwd)
-            emailRegex.matches(field) -> AuthBody("", field, pwd)
+            nameRegex.matches(field) -> AuthRequestBody(field, "", pwd)
+            emailRegex.matches(field) -> AuthRequestBody("", field, pwd)
             else -> invalid()
         }
     }

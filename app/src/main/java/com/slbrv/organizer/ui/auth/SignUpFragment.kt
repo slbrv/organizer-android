@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.auth.AuthBody
+import com.slbrv.organizer.data.auth.AuthRequestBody
 
 class SignUpFragment() : Fragment() {
 
@@ -104,7 +104,7 @@ class SignUpFragment() : Fragment() {
         signUpButton.isEnabled = false
 
         if (validate(username, email, pwd, repPwd)) {
-            viewModel.signUp(AuthBody(username, email, pwd))
+            viewModel.signUp(AuthRequestBody(username, email, pwd))
         } else {
             Log.i("APP", "Not valid")
         }

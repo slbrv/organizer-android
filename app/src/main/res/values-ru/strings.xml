@@ -7,7 +7,6 @@
     <string name="auth_error">Ошибка авторизации, попробуйте еще раз</string>
     <string name="connection_error">Ошибка соединения. Приложение работает в автономном режиме</string>
     <string name="username">Имя пользователя</string>
-    <string name="username_or_email">Имя или email</string>
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
     <string name="repeat_password">Повтор пароля</string>

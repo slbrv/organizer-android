@@ -13,11 +13,11 @@
         android:layout_margin="64dp">
 
         <EditText
-            android:id="@+id/sign_in_username_or_email_edit_view"
+            android:id="@+id/sign_in_username_edit_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/username_or_email"
+            android:hint="@string/username"
             android:inputType="textPersonName"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
@@ -30,7 +30,7 @@
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_username_or_email_edit_view"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_username_edit_view"
             tools:layout_editor_absoluteX="0dp" />
 
         <Button
