@@ -1,8 +1,6 @@
 package com.slbrv.organizer.data.repository.api
 
 import com.slbrv.organizer.data.auth.AuthRequestBody
-import com.slbrv.organizer.data.auth.AuthResponseBody
-import com.slbrv.organizer.data.auth.PublicUserDataResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

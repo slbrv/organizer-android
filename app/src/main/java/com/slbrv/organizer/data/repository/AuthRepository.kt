@@ -4,10 +4,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.slbrv.organizer.Config
+import com.slbrv.organizer.Utils
 import com.slbrv.organizer.data.auth.AuthRequestBody
 import com.slbrv.organizer.data.auth.AuthResponseBody
-import com.slbrv.organizer.data.auth.PublicUserDataResponseBody
 import com.slbrv.organizer.data.repository.api.AuthApi
+import com.slbrv.organizer.ui.main.UserSecretData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,51 +28,61 @@ class AuthRepository {
     private val authApi = retrofit.create(AuthApi::class.java)
 
     fun signUp(body: MutableLiveData<AuthResponseBody>, data: AuthRequestBody) {
-        authApi.signUpUser(data).enqueue(object: Callback<String> {
+        authApi
+            .signUpUser(data)
+            .enqueue(object: Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 val token = response.body() ?: ""
-                body.postValue(AuthResponseBody(response.code(), token))
+                val mix = data.username + data.password
+                body.postValue(AuthResponseBody(response.code(), token, getSecret(mix)))
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("APP", "onFailure() ${t.message}")
-                body.postValue(AuthResponseBody(504, ""))
+                body.postValue(AuthResponseBody(504, "", ""))
             }
         })
     }
 
     fun signIn(body: MutableLiveData<AuthResponseBody>, data: AuthRequestBody) {
-        authApi.signInUser(data).enqueue(object: Callback<String> {
+        authApi
+            .signInUser(data)
+            .enqueue(object: Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 val token = response.body() ?: ""
-                body.postValue(AuthResponseBody(response.code(), token))
+                val mix = data.username + data.password
+                body.postValue(AuthResponseBody(response.code(), token, getSecret(mix)))
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("APP", "onFailure() ${t.message}")
-                body.postValue(AuthResponseBody(504, ""))
+                body.postValue(AuthResponseBody(504, "", ""))
             }
         })
     }
 
-    fun checkToken(tokenLiveData: MutableLiveData<String>, token: String) {
-        authApi.checkToken(token).enqueue(object : Callback<String> {
+    fun checkToken(secretLiveData: MutableLiveData<UserSecretData>, data: UserSecretData) {
+        authApi
+            .checkToken(data.token)
+            .enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if(response.isSuccessful) {
                     when(response.code()) {
-                        200 -> tokenLiveData.postValue("token$token")
-                        else -> tokenLiveData.postValue("")
+                        200 -> secretLiveData.postValue(data)
+                        else -> secretLiveData.postValue(UserSecretData())
                     }
                 } else {
-                    Log.e("APP", "ERR, status: ${response.body()} token: $token")
-                    tokenLiveData.postValue("")
+                    Log.e("APP", "ERR, status: ${response.body()} token: ${data.token}")
+                    secretLiveData.postValue(UserSecretData())
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("APP", "onFailure() ${t.message}")
-                tokenLiveData.postValue("fail")
+                secretLiveData.postValue(UserSecretData())
             }
         })
     }
+
+    private fun getSecret(mix: String) = Utils.md5(mix)
 }

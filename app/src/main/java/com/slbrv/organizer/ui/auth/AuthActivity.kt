@@ -1,4 +1,4 @@
-package com.slbrv.organizer.activity
+package com.slbrv.organizer.ui.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +8,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.auth.AuthResponseBody
-import com.slbrv.organizer.ui.auth.SignUpFragment
-import com.slbrv.organizer.ui.auth.AuthViewModel
 
 class AuthActivity : AppCompatActivity() {
 
@@ -23,7 +21,7 @@ class AuthActivity : AppCompatActivity() {
         val viewModel: AuthViewModel by viewModels()
         val body = viewModel.body
         body.observe(this, {
-            tokenObserve(it)
+            observe(it)
         })
     }
 
@@ -40,7 +38,7 @@ class AuthActivity : AppCompatActivity() {
             .commitNow()
     }
 
-    private fun tokenObserve(body: AuthResponseBody) {
+    private fun observe(body: AuthResponseBody) {
         when (body.status) {
             200, 201 -> success(body)
             400 -> Toast.makeText(
@@ -59,7 +57,7 @@ class AuthActivity : AppCompatActivity() {
                     R.string.auth_error,
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.e("APP", "Body $body.token")
+                Log.e("APP", "Body ${body.token}")
             }
         }
     }
@@ -67,6 +65,7 @@ class AuthActivity : AppCompatActivity() {
     private fun success(body: AuthResponseBody) {
         intent = Intent()
         intent.putExtra("token", body.token)
+        intent.putExtra("secret", body.secret)
         setResult(RESULT_OK, intent)
         finish()
     }

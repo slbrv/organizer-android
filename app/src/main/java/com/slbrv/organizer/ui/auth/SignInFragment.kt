@@ -91,26 +91,24 @@ class SignInFragment : Fragment() {
     }
 
     private fun onSignIn() {
-        run {
-            val field = nameEditText.text.toString()
-            val pwd = passwordEditText.text.toString()
-            signInButton.isEnabled = false
+        val field = nameEditText.text.toString()
+        val pwd = passwordEditText.text.toString()
+        signInButton.isEnabled = false
 
-            val body = validate(field, pwd)
-            if (body != null) {
-                viewModel.signIn(body)
-            } else {
-                Toast.makeText(
-                    context,
-                    R.string.auth_error,
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            }
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                signInButton.isEnabled = true
-            }, 3000)
+        val body = validate(field, pwd)
+        if (body != null) {
+            viewModel.signIn(body)
+        } else {
+            Toast.makeText(
+                context,
+                R.string.auth_error,
+                Toast.LENGTH_SHORT
+            )
+                .show()
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            signInButton.isEnabled = true
+        }, 3000)
     }
 }
