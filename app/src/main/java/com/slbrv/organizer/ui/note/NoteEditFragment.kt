@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slbrv.organizer.Config
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.room.note.NoteEntity
@@ -37,11 +38,6 @@ class NoteEditFragment : Fragment() {
         noteTitleEditText = root.findViewById(R.id.note_title_edit_text)
         noteContentEditText = root.findViewById(R.id.note_content_edit_text)
         noteProjectEditText = root.findViewById(R.id.note_project_edit_text)
-        toolbar = root.findViewById(R.id.toolbar_note_edit_fragment)
-        toolbar.setNavigationIcon(R.drawable.ic_back_button)
-        val color = ContextCompat.getColor(requireContext(), R.color.white)
-        toolbar.navigationIcon?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         noteId = arguments?.getLong("note_id") ?: 0
         if (noteId > 0) {

@@ -1,7 +1,6 @@
 package com.slbrv.organizer.data.room.note
 
 import androidx.room.*
-import com.slbrv.organizer.data.room.note.NoteEntity
 
 @Dao
 interface NoteDao {
@@ -19,4 +18,7 @@ interface NoteDao {
 
     @Delete
     fun delete(noteEntity: NoteEntity)
+
+    @Query("DELETE FROM notes")
+    fun deleteAll()
 } 

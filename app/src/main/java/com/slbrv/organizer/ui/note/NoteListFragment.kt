@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,11 +29,7 @@ class NoteListFragment : Fragment() {
         val navController = NavHostFragment.findNavController(this)
 
         val addActionButton: FloatingActionButton = root.findViewById(R.id.note_add_action_button)
-        addActionButton.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putLong("note_id", 0)
-            navController.navigate(R.id.nav_note, bundle)
-        }
+        addActionButton.setOnClickListener { toEditButtonClick(navController) }
 
         val adapter = NoteRecyclerViewAdapter(context, ArrayList())
 
@@ -45,5 +42,11 @@ class NoteListFragment : Fragment() {
         noteRecyclerView.adapter = adapter
 
         return root
+    }
+
+    private fun toEditButtonClick(navController: NavController) {
+        val bundle = Bundle()
+        bundle.putLong("note_id", 0)
+        navController.navigate(R.id.nav_notes_to_nav_note_action, bundle)
     }
 }

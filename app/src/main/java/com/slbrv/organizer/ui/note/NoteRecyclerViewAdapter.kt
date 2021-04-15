@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
@@ -42,8 +43,10 @@ class NoteRecyclerViewAdapter(
             DateFormat.getDateInstance().format(notes[position].creationDate)
         holder.layout.setOnClickListener {
             val bundle = Bundle()
-            bundle.putLong("note_id", notes[position].id ?: 0)
-            holder.itemView.findNavController().navigate(R.id.nav_note, bundle)
+            bundle.putInt("note_id", position)
+            Navigation
+                .findNavController(holder.itemView)
+                .navigate(R.id.nav_notes_to_nav_note_action, bundle)
         }
     }
 
