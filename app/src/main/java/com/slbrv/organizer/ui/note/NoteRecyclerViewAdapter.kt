@@ -2,6 +2,7 @@ package com.slbrv.organizer.ui.note
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,7 @@ class NoteRecyclerViewAdapter(
             DateFormat.getDateInstance().format(notes[position].creationDate)
         holder.layout.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("note_id", position)
+            bundle.putLong("note_id", position.toLong() + 1)
             Navigation
                 .findNavController(holder.itemView)
                 .navigate(R.id.nav_notes_to_nav_note_action, bundle)

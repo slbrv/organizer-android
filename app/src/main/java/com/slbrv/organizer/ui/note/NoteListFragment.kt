@@ -29,9 +29,9 @@ class NoteListFragment : Fragment() {
         val navController = NavHostFragment.findNavController(this)
 
         val addActionButton: FloatingActionButton = root.findViewById(R.id.note_add_action_button)
-        addActionButton.setOnClickListener { toEditButtonClick(navController) }
+        addActionButton.setOnClickListener { onEditNote(navController) }
 
-        val adapter = NoteRecyclerViewAdapter(context, ArrayList())
+        val adapter = NoteRecyclerViewAdapter(requireContext(), ArrayList())
 
         noteViewModel.getAll().observe(viewLifecycleOwner, {
             adapter.update(it)
@@ -44,7 +44,7 @@ class NoteListFragment : Fragment() {
         return root
     }
 
-    private fun toEditButtonClick(navController: NavController) {
+    private fun onEditNote(navController: NavController) {
         val bundle = Bundle()
         bundle.putLong("note_id", 0)
         navController.navigate(R.id.nav_notes_to_nav_note_action, bundle)

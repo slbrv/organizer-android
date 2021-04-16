@@ -2,6 +2,7 @@ package com.slbrv.organizer.ui.note
 
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
@@ -21,7 +22,6 @@ class NoteEditFragment : Fragment() {
     private lateinit var noteTitleEditText: EditText
     private lateinit var noteContentEditText: EditText
     private lateinit var noteProjectEditText: EditText
-    private lateinit var toolbar: Toolbar
 
     private lateinit var noteEntity: NoteEntity
 
@@ -40,6 +40,7 @@ class NoteEditFragment : Fragment() {
         noteProjectEditText = root.findViewById(R.id.note_project_edit_text)
 
         noteId = arguments?.getLong("note_id") ?: 0
+        Log.i("APP", "note_id: $noteId")
         if (noteId > 0) {
             noteViewModel.get(noteId).observe(viewLifecycleOwner, {
                 noteEntity = it
