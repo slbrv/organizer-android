@@ -29,7 +29,8 @@ class TaskListFragment : Fragment() {
         val tasks = ArrayList<TaskEntity>()
 
         val selectedTask = MutableLiveData<Int>()
-        val adapter = TaskRecyclerViewAdapter(requireContext(), selectedTask, tasks)
+        val checkedTask = MutableLiveData<Int>()
+        val adapter = TaskRecyclerViewAdapter(requireContext(), tasks, selectedTask, checkedTask)
 
         taskViewModel.getAll().observe(viewLifecycleOwner, {
             tasks.clear()
@@ -51,6 +52,10 @@ class TaskListFragment : Fragment() {
             onEditTask(adapter, tasks, it)
         })
 
+        checkedTask.observe(viewLifecycleOwner, {
+            onCheckTask(tasks, it)
+        })
+
         return view
     }
 
@@ -60,20 +65,26 @@ class TaskListFragment : Fragment() {
         id: Int
     ) {
         val taskData = MutableLiveData<TaskEntity>()
-        val task = if(id >= 0) tasks[id] else null
+        val task = if (id >= 0) tasks[id] else null
         val taskEditFragment = TaskEditDialogFragment.getInstance(taskData, task)
         taskEditFragment.show(parentFragmentManager, taskEditFragment.tag)
         taskData.observe(viewLifecycleOwner, {
-            if(id >= 0) {
+            if (id >= 0) {
                 tasks[id] = it
                 taskViewModel.update(it)
-            }
-            else {
+            } else {
                 tasks.add(it)
                 taskViewModel.insert(it)
             }
             adapter.notifyDataSetChanged()
         })
+    }
+
+    private fun onCheckTask(
+        tasks: List<TaskEntity>,
+        position: Int
+    ) {
+        taskViewModel.update(tasks[position])
     }
 
 }

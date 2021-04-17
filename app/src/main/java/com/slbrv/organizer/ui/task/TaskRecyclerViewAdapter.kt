@@ -8,21 +8,19 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.slbrv.organizer.R
-import com.slbrv.organizer.data.room.note.NoteEntity
 import com.slbrv.organizer.data.room.task.TaskEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TaskRecyclerViewAdapter(
     private val context: Context,
-    private val selected: MutableLiveData<Int>,
     private var tasks: List<TaskEntity>,
+    private val selected: MutableLiveData<Int>,
+    private val checked: MutableLiveData<Int>
 ) : RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +34,7 @@ class TaskRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        fun markTask() {
+        fun checkTask() {
             holder.taskTextView.text = tasks[position].task
             if (tasks[position].checked) {
                 holder.taskTextView.paintFlags =
@@ -55,7 +53,7 @@ class TaskRecyclerViewAdapter(
             }
         }
 
-        markTask()
+        checkTask()
         holder.taskTargetDateTextView.text =
             SimpleDateFormat("yyyy-MM-dd", Locale.US)
                 .format(tasks[position].targetDate)
@@ -63,7 +61,8 @@ class TaskRecyclerViewAdapter(
         holder.taskCheckBox.isChecked = tasks[position].checked
         holder.taskCheckBox.setOnClickListener {
             tasks[position].checked = holder.taskCheckBox.isChecked
-            markTask()
+            checked.value = position
+            checkTask()
         }
 
         holder.layout.setOnClickListener {
