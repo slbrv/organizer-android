@@ -19,62 +19,72 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun insert(note: NoteEntity): LiveData<Long> {
         val idData = MutableLiveData<Long>()
         viewModelScope.launch(Dispatchers.IO) {
-            val noteDao = Room.databaseBuilder(
+            val noteDb = Room.databaseBuilder(
                 getApplication(),
                 OrganizerDatabase::class.java,
                 Config.ORGANIZER_DATABASE_NAME
-            ).build().noteDao()
+            ).build()
+            val noteDao = noteDb.noteDao()
             idData.postValue(noteDao.insert(note))
             allData.postValue(noteDao.getAll())
+            noteDb.close()
         }
         return idData
     }
 
     fun update(note: NoteEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            val noteDao = Room.databaseBuilder(
+            val noteDb = Room.databaseBuilder(
                 getApplication(),
                 OrganizerDatabase::class.java,
                 Config.ORGANIZER_DATABASE_NAME
-            ).build().noteDao()
+            ).build()
+            val noteDao = noteDb.noteDao()
             noteDao.update(note)
             allData.postValue(noteDao.getAll())
+            noteDb.close()
         }
     }
 
     fun delete(note: NoteEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            val noteDao = Room.databaseBuilder(
+            val noteDb = Room.databaseBuilder(
                 getApplication(),
                 OrganizerDatabase::class.java,
                 Config.ORGANIZER_DATABASE_NAME
-            ).build().noteDao()
+            ).build()
+            val noteDao = noteDb.noteDao()
             noteDao.delete(note)
             allData.postValue(noteDao.getAll())
+            noteDb.close()
         }
     }
 
     fun get(noteId: Long): LiveData<NoteEntity> {
         val noteData = MutableLiveData<NoteEntity>()
         viewModelScope.launch(Dispatchers.IO) {
-            val noteDao = Room.databaseBuilder(
+            val noteDb = Room.databaseBuilder(
                 getApplication(),
                 OrganizerDatabase::class.java,
                 Config.ORGANIZER_DATABASE_NAME
-            ).build().noteDao()
+            ).build()
+            val noteDao = noteDb.noteDao()
             noteData.postValue(noteDao.get(noteId))
+            noteDb.close()
         }
         return noteData
     }
 
     fun getAll(): LiveData<List<NoteEntity>> {
         viewModelScope.launch(Dispatchers.IO) {
-            val noteDao = Room.databaseBuilder(
+            val noteDb = Room.databaseBuilder(
                 getApplication(),
                 OrganizerDatabase::class.java,
                 Config.ORGANIZER_DATABASE_NAME
-            ).build().noteDao()
+            ).build()
+            val noteDao = noteDb.noteDao()
             allData.postValue(noteDao.getAll())
+            noteDb.close()
         }
         return allData
     }

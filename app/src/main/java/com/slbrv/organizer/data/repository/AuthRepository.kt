@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.slbrv.organizer.Config
-import com.slbrv.organizer.Utils
+import com.slbrv.organizer.util.Algorithm
 import com.slbrv.organizer.data.auth.AuthRequestBody
 import com.slbrv.organizer.data.auth.AuthResponseBody
 import com.slbrv.organizer.data.repository.api.AuthApi
@@ -84,5 +84,5 @@ class AuthRepository {
         })
     }
 
-    private fun getSecret(mix: String) = Utils.md5(mix)
+    private fun getSecret(mix: String) = Algorithm.md5(mix)
 }

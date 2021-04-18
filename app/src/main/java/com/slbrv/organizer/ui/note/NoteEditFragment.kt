@@ -49,8 +49,7 @@ class NoteEditFragment : Fragment() {
                 noteProjectEditText.setText(noteEntity.project)
             })
         } else {
-            val time = Calendar.getInstance().time
-            noteEntity = NoteEntity(null, "", "", time, time, "", false)
+            noteEntity = NoteEntity()
         }
 
         return root

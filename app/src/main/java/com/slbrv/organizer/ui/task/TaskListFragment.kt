@@ -1,6 +1,7 @@
 package com.slbrv.organizer.ui.task
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,8 @@ class TaskListFragment : Fragment() {
     private lateinit var taskViewModel: TaskViewModel
     private lateinit var taskRecyclerView: RecyclerView
 
+    private val tasks = TaskList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,16 +29,14 @@ class TaskListFragment : Fragment() {
         taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
 
-        val tasks = ArrayList<TaskEntity>()
-
         val selectedTask = MutableLiveData<Int>()
         val checkedTask = MutableLiveData<Int>()
-        val adapter = TaskRecyclerViewAdapter(requireContext(), tasks, selectedTask, checkedTask)
+        val adapter =
+            TaskRecyclerViewAdapter(requireContext(), tasks.toList(), selectedTask, checkedTask)
 
-        taskViewModel.getAll().observe(viewLifecycleOwner, {
-            tasks.clear()
-            tasks.addAll(it)
-            adapter.update(tasks)
+        taskViewModel.getAll().observe(viewLifecycleOwner, { list ->
+            tasks.set(list)
+            adapter.update(tasks.toList())
         })
 
         taskRecyclerView = view.findViewById(R.id.task_recycler_view)
@@ -45,32 +46,36 @@ class TaskListFragment : Fragment() {
         val addActionButton: FloatingActionButton = view.findViewById(R.id.task_add_action_button)
 
         addActionButton.setOnClickListener {
-            onEditTask(adapter, tasks, -1)
+            onEditTask(adapter, -1)
         }
 
-        selectedTask.observe(viewLifecycleOwner, {
-            onEditTask(adapter, tasks, it)
+        selectedTask.observe(viewLifecycleOwner, { index ->
+            onEditTask(adapter, index)
         })
 
-        checkedTask.observe(viewLifecycleOwner, {
-            onCheckTask(tasks, it)
+        checkedTask.observe(viewLifecycleOwner, { index ->
+            onCheckTask(adapter, index)
         })
 
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        taskViewModel.updatePositions(tasks.toList())
+    }
+
     private fun onEditTask(
         adapter: TaskRecyclerViewAdapter,
-        tasks: ArrayList<TaskEntity>,
-        id: Int
+        index: Int
     ) {
         val taskData = MutableLiveData<TaskEntity>()
-        val task = if (id >= 0) tasks[id] else null
+        val task = if (index >= 0) tasks.get(index) else null
         val taskEditFragment = TaskEditDialogFragment.getInstance(taskData, task)
         taskEditFragment.show(parentFragmentManager, taskEditFragment.tag)
         taskData.observe(viewLifecycleOwner, {
-            if (id >= 0) {
-                tasks[id] = it
+            if (index >= 0) {
+                tasks.replace(index, it)
                 taskViewModel.update(it)
             } else {
                 tasks.add(it)
@@ -81,10 +86,13 @@ class TaskListFragment : Fragment() {
     }
 
     private fun onCheckTask(
-        tasks: List<TaskEntity>,
-        position: Int
+        adapter: TaskRecyclerViewAdapter,
+        index: Int
     ) {
-        taskViewModel.update(tasks[position])
+        val task = tasks.get(index)
+        tasks.move(index, 0)
+        taskViewModel.update(task)
+        adapter.notifyItemMoved(index, 0)
     }
 
 }

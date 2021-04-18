@@ -7,10 +7,11 @@ import java.util.*
 
 @Entity(tableName = "tasks")
 data class TaskEntity(
-    @PrimaryKey(autoGenerate = true) var id: Long?,
-    @ColumnInfo(name = "task") var task: String,
-    @ColumnInfo(name = "creation_date") var creationDate: Date,
-    @ColumnInfo(name = "target_date") var targetDate: Date,
-    @ColumnInfo(name = "project") var project: String,
-    @ColumnInfo(name = "checked") var checked: Boolean
+    @PrimaryKey(autoGenerate = true) var id: Long? = null,
+    @ColumnInfo(name = "task") var task: String = "",
+    @ColumnInfo(name = "list_position") var position: Int = 0,
+    @ColumnInfo(name = "creation_date") var creationDate: Date = Calendar.getInstance().time,
+    @ColumnInfo(name = "target_date") var targetDate: Date = Calendar.getInstance().time,
+    @ColumnInfo(name = "project") var project: String = "",
+    @ColumnInfo(name = "checked") var checked: Boolean = false
 )

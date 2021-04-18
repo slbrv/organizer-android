@@ -17,6 +17,9 @@ interface TaskDao {
     @Update
     fun update(noteEntity: TaskEntity)
 
+    @Query("UPDATE tasks SET list_position = :position WHERE id = :id")
+    fun updatePosition(id: Long, position: Int)
+
     @Delete
     fun delete(noteEntity: TaskEntity)
 

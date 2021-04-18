@@ -30,8 +30,7 @@ class TaskEditDialogFragment(
             task: TaskEntity?
         )
                 : TaskEditDialogFragment {
-            val date = Calendar.getInstance().time
-            val inTask = task?.copy() ?: TaskEntity(null, "", date, date, "", false)
+            val inTask = task?.copy() ?: TaskEntity()
             val fragment = TaskEditDialogFragment(data, inTask)
             val bundle = Bundle()
             fragment.arguments = bundle

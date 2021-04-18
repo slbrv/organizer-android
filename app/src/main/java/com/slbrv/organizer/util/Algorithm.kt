@@ -1,9 +1,9 @@
-package com.slbrv.organizer
+package com.slbrv.organizer.util
 
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-object Utils {
+object Algorithm {
 
     fun md5(input: String): String = hash("MD5", input)
 
