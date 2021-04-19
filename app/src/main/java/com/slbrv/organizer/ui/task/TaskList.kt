@@ -29,10 +29,8 @@ class TaskList {
     fun move(from: Int, to: Int) {
         val task = tasks.removeAt(from)
         tasks.add(to, task)
-        for ((index, item) in tasks.withIndex()) {
+        for ((index, item) in tasks.withIndex())
             item.position = index
-            Log.i("APP", "Id: ${item.id} task: ${item.task}, position: ${item.position}")
-        }
 
     }
 

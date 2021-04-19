@@ -54,7 +54,7 @@ class TaskListFragment : Fragment() {
         })
 
         checkedTask.observe(viewLifecycleOwner, { index ->
-            onCheckTask(adapter, index)
+            onCheckTask(index)
         })
 
         return view
@@ -86,13 +86,10 @@ class TaskListFragment : Fragment() {
     }
 
     private fun onCheckTask(
-        adapter: TaskRecyclerViewAdapter,
         index: Int
     ) {
         val task = tasks.get(index)
-        tasks.move(index, 0)
         taskViewModel.update(task)
-        adapter.notifyItemMoved(index, 0)
     }
 
 }
