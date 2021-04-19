@@ -1,15 +1,11 @@
 package com.slbrv.organizer.ui.note
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.slbrv.organizer.Config
 import com.slbrv.organizer.R
 import com.slbrv.organizer.data.room.note.NoteEntity
